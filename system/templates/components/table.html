@@ -1,0 +1,34 @@
+{% load filters %}
+<div class="table-responsive" id="table-content">
+    <table class="table">
+        <thead>
+            <tr>
+                {% for field in fields %}
+                    <th>{{ field }}</th>
+                {% endfor %}
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if querySet %}
+            
+              
+                {% for data in querySet %}
+                    
+                    <tr>              
+                        {% for field in fields %}
+                            <td>{% get_data data field %}</td>
+                        {% endfor %}
+                        <td><button type="button" class="btn-close" aria-label="Close" data-id="{{ data.id }}" id="delete-item"></button></td>
+                    </tr>                           
+
+                {% endfor %}
+                    
+            {% else %}
+                    
+                <tr><td class="table-danger">Nemate podataka za prikaz</td></tr>
+
+            {% endif %}
+        </tbody>
+    </table>
+</div>
