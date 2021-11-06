@@ -31,9 +31,9 @@ class Reservation(models.Model):
     professor = models.CharField(max_length = 3000)
     book = models.ForeignKey(Book, on_delete = models.CASCADE)
     quantity = models.IntegerField()
-    returned = models.IntegerField(default = 0)
-    issued = models.IntegerField(default = 0)
-    returnStatus = models.BooleanField(default = False)
+    returned = models.IntegerField(default = 0) # Nuber of returned book's
+    issued = models.IntegerField(default = 0) # Number of issued book's
+    returnStatus = models.BooleanField(default = False) # Return status changes to true when all book's are returned
 
     def __str__(self) -> str:
         return f"{ self.id } - { self.book } - { self.professor }"
@@ -41,8 +41,7 @@ class Reservation(models.Model):
 class Issue(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete = models.CASCADE, null = True, blank = True)
     student = models.ForeignKey(Student, on_delete = models.CASCADE)
-    startDate = models.DateField()
-    endDate = models.DateField(blank = True, null = True)
+    leaseDate = models.DateField()
+    returnDate = models.DateField(blank = True, null = True)
     returnStatus = models.BooleanField(default = False)
     debt = models.DecimalField(max_digits = 30, decimal_places = 2, default = '0')
-

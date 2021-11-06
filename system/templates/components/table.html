@@ -11,10 +11,9 @@
         </thead>
         <tbody>
             {% if querySet %}
-            
               
                 {% for data in querySet %}
-                    
+
                     <tr>              
                         {% for field in fields %}
                             <td>{% get_data data field %}</td>
