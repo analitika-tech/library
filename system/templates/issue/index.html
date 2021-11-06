@@ -55,7 +55,7 @@
                     headers: {"X-CSRFToken": csrf[0].value},
                     url: url,
                     success: response =>{
-                        console.log(response.returnStatus, response.returnDate)
+                        console.log(response.returnStatus, response.returnDate, response.debt)
                     },
                     error: error =>{
                         console.log(error)

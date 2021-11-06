@@ -34,7 +34,7 @@ class IssueForm(forms.ModelForm):
         model = Issue
         fields = ["reservation", "student", "leaseDate",]
 
-    # Lease date validation
+    # Lease date
     def clean_leaseDate(self, *args, **kwargs):
         date = self.cleaned_data["leaseDate"]
         if date >= datetime.today().date():

@@ -246,12 +246,13 @@ class IssueGPView(View):
         return render(request, "issue/index.html", context)
 
 class IssuePDView(View):
+    # Getting the Issue object
     def get_object(self, pk):
         try:
             return Issue.objects.get(id = pk)
         except Issue.DoesNotExist:
             raise Http404
-    
+
     def get(self, request, pk):
         return self.get_object(pk)
     
@@ -266,30 +267,30 @@ class IssuePDView(View):
                 # Updating the issues DB to the latest info
                 issue.returnStatus = False
                 issue.returnDate = None
+                issue.debt = 0
                 reservation.returned -= 1
             else:
                 issue.returnStatus = True
                 issue.returnDate = date.today()
                 if date.today() > reservation.endDate:
-                    print(date.today() - reservation.endDate)
+                    delta = date.today() - reservation.endDate
+                    issue.debt = delta.days * .5
                 reservation.returned += 1
             
             # Saving the changes
             issue.save()
             reservation.save()
 
+            # Preparing the data for returning into template
             data['returnStatus'] = issue.returnStatus
             data['returnDate'] = issue.returnDate
-
-            # data['returnDate'] = issue.returnDate
-
+            data['debt'] = issue.debt
             data['content'] = "Uspješno ste izmjenili podatke o knjizi!"
+
             return JsonResponse(data)
-            
-            # data["content"] = form.errors
-            # return JsonResponse(data)
     
     def delete(self, request, pk):
         issue = self.get_object(pk)
         issue.delete()
+
         return JsonResponse(dict(code = 204, content = "Učenik je izbrisan!"))
