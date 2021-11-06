@@ -72,3 +72,65 @@ class BookPDView(View):
         book = self.get_object(pk)
         book.delete()
         return JsonResponse(dict(code = 204, content = "Knjiga je izbrisana"))
+
+
+class StudentGPView(View):
+    def get(self, request):
+        students = Student.objects.all()
+        form = StudentForm()
+        fields = []
+
+        # Model fields
+        for field in Student._meta.get_fields():
+            if field.name != "issues":
+                fields.append(field.name)
+
+
+        context = {
+            "fields": fields,
+            "querySet": students,
+            "form": form,
+        }
+
+        return render(request, "student/index.html", context)
+
+    def post(self, request):
+        form = StudentForm()
+
+        if request.method == "POST":
+            form = StudentForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect("student-view")
+            else:
+                return form.errors
+
+class StudentPDView(View):
+    def get_object(self, pk):
+        try:
+            return Student.objects.get(id = pk)
+        except Student.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, pk):
+        return self.get_object(pk)
+    
+    def put(self, request, pk):
+        book = self.get_object(pk)
+        data = {}
+
+        if request.is_ajax():
+            form = BookForm(instance = book, data = request.POST)
+            if form.is_valid():
+                form.save()
+                data['code'] = 200
+                data['content'] = "Uspješno ste izmjenili podatke o njizi!"
+                return JsonResponse(data)
+            
+            data["content"] = form.errors
+            return JsonResponse(data)
+    
+    def delete(self, request, pk):
+        student = self.get_object(pk)
+        student.delete()
+        return JsonResponse(dict(code = 204, content = "Učenik je izbrisan!"))

@@ -41,12 +41,6 @@ class IssueForm(forms.ModelForm):
             return date
         raise forms.ValidationError("Datum koji ste unijeli nije validan!")
 
-    # def clean_endDate(self, *args, **kwargs):
-    #     date = self.cleaned_data["endDate"]
-    #     if date >= datetime.today().date():
-    #         return date
-    #     raise forms.ValidationError("Datum koji ste unijeli nije validan!")
-
     def clean(self, *args, **kwargs):
         reservation = Reservation.objects.get(id = self.cleaned_data["reservation"].id)
         if reservation.issued >= reservation.quantity:
@@ -61,14 +55,14 @@ class ReservationForm(forms.ModelForm):
     startDate = forms.DateField(widget = DateInput)
     endDate = forms.DateField(widget = DateInput)
 
-    def clean_startDate(self, *args, **kwargs):
-        date = self.cleaned_data["startDate"]
+    def clean_leaseDate(self, *args, **kwargs):
+        date = self.cleaned_data["leaseDate"]
         if date >= datetime.today().date():
             return date
         raise forms.ValidationError("Datum koji ste unijeli nije validan!")
 
-    def clean_endDate(self, *args, **kwargs):
-        date = self.cleaned_data["endDate"]
+    def clean_returnDate(self, *args, **kwargs):
+        date = self.cleaned_data["returnDate"]
         if date >= datetime.today().date():
             return date
         raise forms.ValidationError("Datum koji ste unijeli nije validan!")
