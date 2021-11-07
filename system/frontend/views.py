@@ -2,18 +2,29 @@ from django.shortcuts import render, redirect
 from django.http import Http404, JsonResponse
 from django.views import View
 
+# Decorators
+from django.contrib.auth.decorators import login_required
+from .decorators import allowerd_users
+
 from datetime import date
 
+# Models and Forms
 from backend.models import Book, Class, Student, Issue, Reservation
 from .forms import BookForm, ClassForm, StudentForm, IssueForm, ReservationForm
 from .custom import get_fields
 
+
+@login_required(login_url = "login")
 def home_view(request):
 
-    context = {}
+    context = {
+        "user": request.user
+    }
 
     return render(request, "home.html", context)
 
+def error_view(request):
+    return render(request, "component/error.html")
 
 class BookGPView(View):
     def get(self, request):
@@ -77,6 +88,7 @@ class BookPDView(View):
 
 
 class StudentGPView(View):
+    @allowerd_users(["student-editing"])
     def get(self, request):
         students = Student.objects.all()
         form = StudentForm()
@@ -96,6 +108,7 @@ class StudentGPView(View):
 
         return render(request, "student/index.html", context)
 
+    @allowerd_users(["student-editing"])
     def post(self, request):
         form = StudentForm()
 
@@ -113,10 +126,11 @@ class StudentPDView(View):
             return Student.objects.get(id = pk)
         except Student.DoesNotExist:
             raise Http404
-    
+    @allowerd_users(["student-editing"])
     def get(self, request, pk):
         return self.get_object(pk)
     
+    @allowerd_users(["student-editing"])
     def put(self, request, pk):
         book = self.get_object(pk)
         data = {}
@@ -132,6 +146,7 @@ class StudentPDView(View):
             data["content"] = form.errors
             return JsonResponse(data)
     
+    @allowerd_users(["student-editing"])
     def delete(self, request, pk):
         student = self.get_object(pk)
         student.delete()
@@ -139,6 +154,7 @@ class StudentPDView(View):
 
 
 class ReservationGPView(View):
+    @allowerd_users(["reservation-editing"])
     def get(self, request):
         reservation = Reservation.objects.all()
         form = ReservationForm()
@@ -151,7 +167,8 @@ class ReservationGPView(View):
         }
 
         return render(request, "reservation/index.html", context)
-
+    
+    @allowerd_users(["reservation-editing"])
     def post(self, request):
         reservation = Reservation.objects.all()
         form = ReservationForm()
@@ -197,6 +214,7 @@ class ReservationPDView(View):
     #         data["content"] = form.errors
     #         return JsonResponse(data)
     
+    @allowerd_users(["reservation-editing"])
     def delete(self, request, pk):
         reservation = self.get_object(pk)
         
@@ -209,6 +227,7 @@ class ReservationPDView(View):
 
 
 class IssueGPView(View):
+    @allowerd_users(["issue-editing"])
     def get(self, request):
         issues = Issue.objects.all()
         form = IssueForm()
@@ -222,6 +241,7 @@ class IssueGPView(View):
 
         return render(request, "issue/index.html", context)
 
+    @allowerd_users(["issue-editing"])
     def post(self, request):
         issues = Issue.objects.all()
         form = IssueForm()
@@ -256,6 +276,7 @@ class IssuePDView(View):
     def get(self, request, pk):
         return self.get_object(pk)
     
+    @allowerd_users(["issue-editing"])
     def put(self, request, pk):
         issue = self.get_object(pk)
         data = {}
@@ -289,8 +310,10 @@ class IssuePDView(View):
 
             return JsonResponse(data)
     
+    @allowerd_users(["issue-editing"])
     def delete(self, request, pk):
         issue = self.get_object(pk)
         issue.delete()
 
         return JsonResponse(dict(code = 204, content = "Učenik je izbrisan!"))
+

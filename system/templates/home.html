@@ -1,8 +1,12 @@
-{% extedns "base.html" %}
+{% extends "base.html" %}
 
 
-{% block head %}{% endblock %}
+{% block head %}
+    <title>Dobro došli</title>
+{% endblock %}
 
 
 
-{% block body %}{% endblock %}
+{% block body %}
+    {{ user }}
+{% endblock %}
