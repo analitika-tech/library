@@ -6,7 +6,9 @@
                 {% for field in fields %}
                     <th>{{ field }}</th>
                 {% endfor %}
-                <th>Delete</th>
+                {% if request.path != "/" %}
+                    <th>Delete</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -18,7 +20,9 @@
                         {% for field in fields %}
                             <td>{% get_data data field %}</td>
                         {% endfor %}
-                        <td><button type="button" class="btn-close" aria-label="Close" data-id="{{ data.id }}" id="delete-item"></button></td>
+                        {% if request.path != "/" %}
+                            <td><button type="button" class="btn-close" aria-label="Close" data-id="{{ data.id }}" id="delete-item"></button></td>
+                        {% endif %}
                     </tr>                           
 
                 {% endfor %}

@@ -3,7 +3,7 @@ from django.http import Http404, JsonResponse
 from django.views import View
 
 # Decorators
-from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .decorators import allowerd_users
 
 from datetime import date
@@ -14,19 +14,26 @@ from .forms import BookForm, ClassForm, StudentForm, IssueForm, ReservationForm
 from .custom import get_fields
 
 
-@login_required(login_url = "login")
 def home_view(request):
+    books = Book.objects.all()
+    fields = []
+    # Model field list
+    for field in Book._meta.get_fields():
+        if field.name != "reservation":
+            fields.append(field.name) 
 
     context = {
-        "user": request.user
+        "querySet": books,
+        "fields": fields,
     }
 
     return render(request, "home.html", context)
 
 def error_view(request):
-    return render(request, "component/error.html")
+    return render(request, "components/error.html")
 
 class BookGPView(View):
+    @method_decorator(allowerd_users(["book-editing"]))
     def get(self, request):
         books = Book.objects.all()
         form = BookForm()
@@ -45,6 +52,7 @@ class BookGPView(View):
 
         return render(request, "book/index.html", context)
 
+    @method_decorator(allowerd_users(["book-editing"]))
     def post(self, request):
         form = BookForm()
 
@@ -63,9 +71,11 @@ class BookPDView(View):
         except Book.DoesNotExist:
             raise Http404
     
+    @method_decorator(allowerd_users(["book-editing"]))
     def get(self, request, pk):
         return self.get_object(pk)
     
+    @method_decorator(allowerd_users(["book-editing"]))
     def put(self, request, pk):
         book = self.get_object(pk)
         data = {}
@@ -80,7 +90,8 @@ class BookPDView(View):
             
             data["content"] = form.errors
             return JsonResponse(data)
-    
+
+    @method_decorator(allowerd_users(["book-editing"]))
     def delete(self, request, pk):
         book = self.get_object(pk)
         book.delete()
@@ -88,7 +99,7 @@ class BookPDView(View):
 
 
 class StudentGPView(View):
-    @allowerd_users(["student-editing"])
+    @method_decorator(allowerd_users(["student-editing"]))
     def get(self, request):
         students = Student.objects.all()
         form = StudentForm()
@@ -108,7 +119,7 @@ class StudentGPView(View):
 
         return render(request, "student/index.html", context)
 
-    @allowerd_users(["student-editing"])
+    @method_decorator(allowerd_users(["student-editing"]))
     def post(self, request):
         form = StudentForm()
 
@@ -126,11 +137,12 @@ class StudentPDView(View):
             return Student.objects.get(id = pk)
         except Student.DoesNotExist:
             raise Http404
-    @allowerd_users(["student-editing"])
+
+    @method_decorator(allowerd_users(["student-editing"]))
     def get(self, request, pk):
         return self.get_object(pk)
     
-    @allowerd_users(["student-editing"])
+    @method_decorator(allowerd_users(["student-editing"]))
     def put(self, request, pk):
         book = self.get_object(pk)
         data = {}
@@ -146,7 +158,7 @@ class StudentPDView(View):
             data["content"] = form.errors
             return JsonResponse(data)
     
-    @allowerd_users(["student-editing"])
+    @method_decorator(allowerd_users(["student-editing"]))
     def delete(self, request, pk):
         student = self.get_object(pk)
         student.delete()
@@ -154,7 +166,7 @@ class StudentPDView(View):
 
 
 class ReservationGPView(View):
-    @allowerd_users(["reservation-editing"])
+    @method_decorator(allowerd_users(["reservation-editing"]))
     def get(self, request):
         reservation = Reservation.objects.all()
         form = ReservationForm()
@@ -168,7 +180,7 @@ class ReservationGPView(View):
 
         return render(request, "reservation/index.html", context)
     
-    @allowerd_users(["reservation-editing"])
+    @method_decorator(allowerd_users(["reservation-editing"]))
     def post(self, request):
         reservation = Reservation.objects.all()
         form = ReservationForm()
@@ -196,6 +208,7 @@ class ReservationPDView(View):
         except Reservation.DoesNotExist:
             raise Http404
     
+    @method_decorator(allowerd_users(["reservation-editing"]))
     def get(self, request, pk):
         return self.get_object(pk)
     
@@ -214,7 +227,7 @@ class ReservationPDView(View):
     #         data["content"] = form.errors
     #         return JsonResponse(data)
     
-    @allowerd_users(["reservation-editing"])
+    @method_decorator(allowerd_users(["reservation-editing"]))
     def delete(self, request, pk):
         reservation = self.get_object(pk)
         
@@ -227,7 +240,7 @@ class ReservationPDView(View):
 
 
 class IssueGPView(View):
-    @allowerd_users(["issue-editing"])
+    @method_decorator(allowerd_users(["issue-editing"]))
     def get(self, request):
         issues = Issue.objects.all()
         form = IssueForm()
@@ -241,7 +254,7 @@ class IssueGPView(View):
 
         return render(request, "issue/index.html", context)
 
-    @allowerd_users(["issue-editing"])
+    @method_decorator(allowerd_users(["issue-editing"]))
     def post(self, request):
         issues = Issue.objects.all()
         form = IssueForm()
@@ -273,10 +286,11 @@ class IssuePDView(View):
         except Issue.DoesNotExist:
             raise Http404
 
+    @method_decorator(allowerd_users(["issue-editing"]))
     def get(self, request, pk):
         return self.get_object(pk)
     
-    @allowerd_users(["issue-editing"])
+    @method_decorator(allowerd_users(["issue-editing"]))
     def put(self, request, pk):
         issue = self.get_object(pk)
         data = {}
@@ -310,7 +324,7 @@ class IssuePDView(View):
 
             return JsonResponse(data)
     
-    @allowerd_users(["issue-editing"])
+    @method_decorator(allowerd_users(["issue-editing"]))
     def delete(self, request, pk):
         issue = self.get_object(pk)
         issue.delete()
