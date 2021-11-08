@@ -1,28 +1,69 @@
 body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: auto;
-    width: 90%;
-    gap: 10px;
+    margin-top: 48px;
+    font-family: 'Poppins', sans-serif;
+}
+/* Desktop view */
+@media (min-width: 768px) {
+    body{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        gap: 10px;
+        margin: auto;
+        padding-top: 70px;
+    }
+    
+    #register-form{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        margin: auto;
+    }
+    
+    #register-button{
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    #search{
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        width: 50%;
+        text-align: center;
+    }
 }
 
-#register-form{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: auto;
-}
 
-#register-button{
-    margin-top: 10px;
-    width: 100%;
-}
-
-#search{
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 50%;
-    text-align: center;
+/* Mobile view */
+@media (max-width: 768px) {
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    #register-form{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: auto;
+    }
+    
+    #register-button{
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    
+    #search{
+        margin: auto;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        width: 80%;
+        text-align: center;
+    }
 }

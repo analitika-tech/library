@@ -1,41 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="width: 100%;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">JU MSŠ "Omer Filipović" Ključ</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">JU MSŠ "Omer Filipović" Ključ</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/home/' %} active {% endif %}" href="{% url 'home-view' %}">Početna</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/book/' %} active {% endif %}" href="{% url 'book-view' %}">Knjige</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/student/' %} active {% endif %}" href="{% url 'student-view' %}">Učenici</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/issue/' %} active {% endif %}" href="{% url 'issue-view' %}">Izdavanje knjiga</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/reservation/' %} active {% endif %}" href="{% url 'reservation-view' %}">Rezervacija knjiga</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/home/' %} active {% endif %}" href="{% url 'home-view' %}">Početna</a>
+            <a class="nav-link active disabled">{{ user }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/book/' %} active {% endif %}" href="{% url 'book-view' %}">Knjige</a>
+            <a class="nav-link active" href="{% url 'logout-view' %}">Logout</a>
           </li>
+        {% else %}
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/student/' %} active {% endif %}" href="{% url 'student-view' %}">Učenici</a>
+            <a class="nav-link active" href="{% url 'login-view' %}">Login</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link {% if request.path == '/issue/' %} active {% endif %}" href="{% url 'issue-view' %}">Izdavanje knjiga</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {% if request.path == '/reservation/' %} active {% endif %}" href="{% url 'reservation-view' %}">Rezervacija knjiga</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-          {% if request.user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link active disabled">{{ user }}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="{% url 'logout-view' %}">Logout</a>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a class="nav-link active" href="{% url 'login-view' %}">Login</a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
+        {% endif %}
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
