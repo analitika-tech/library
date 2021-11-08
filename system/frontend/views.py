@@ -317,6 +317,7 @@ class IssuePDView(View):
             reservation.save()
 
             # Preparing the data for returning into template
+            data['id'] = issue.id
             data['returnStatus'] = issue.returnStatus
             data['returnDate'] = issue.returnDate
             data['debt'] = issue.debt

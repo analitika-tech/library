@@ -1,6 +1,5 @@
 {% load crispy_forms_tags %}
-
 <form method="POST" id="register-form" data-url="{{ request.path }}">{% csrf_token %}
     {{ form | crispy }}
-    <input type="submit" value="Register" class="btn btn-success btn-lg">
+    <input type="submit" value="Register" class="btn btn-success btn-lg" id="register-button">
 </form>

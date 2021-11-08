@@ -3,9 +3,7 @@
 
 {% block head %}
 
-    <link rel="stylesheet" href="{% static 'general/css/general.css' %}">
-    <link rel="stylesheet" href="{% static 'components/css/form.css' %}">
-    <link rel="stylesheet" href="{% static 'components/css/table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
     <title>Izdavanje knjiga</title>
 
 {% endblock %}
@@ -25,7 +23,7 @@
 
         console.log(rows)
         
-
+        // Deleting the issued book
         for(let i = 0; i < deleteList.length; i++){
             deleteList[i].addEventListener("click", () => {
                 const url = `${ form.dataset.url }actions/${ deleteList[i].dataset.id }`;
@@ -47,6 +45,7 @@
             })
         }
 
+        // Updating the return status of the book
         for(let i = 0; i < rows.length; i++){
             rows[i].addEventListener("click", () => {
                 const url = `${ form.dataset.url }actions/${ deleteList[i].dataset.id }`;
@@ -56,6 +55,14 @@
                     url: url,
                     success: response =>{
                         console.log(response.returnStatus, response.returnDate, response.debt)
+                        if(response.returnStatus){
+                            const element = document.querySelectorAll(`[data-id=${ response.id }]`);
+                            element.classList.add("alert-success")
+                        }
+                        else{
+                            const element = document.querySelectorAll(`[data-id=${ response.id }]`);
+                            element.classList.add("alert-danger")
+                        }
                     },
                     error: error =>{
                         console.log(error)

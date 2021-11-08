@@ -1,5 +1,4 @@
 from django.shortcuts import redirect
-from django.http import HttpResponse
 
 
 def allowerd_users(allowerd_rules = []):

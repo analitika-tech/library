@@ -1,6 +1,6 @@
 {% load filters %}
 <div class="table-responsive" id="table-content">
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 {% for field in fields %}
@@ -16,7 +16,7 @@
               
                 {% for data in querySet %}
 
-                    <tr class="trow">              
+                    <tr class="trow{% if request.path == '/issue/' or request.path == '/reservation/' %} {% if data.returnStatus %} alert-success {% else %} alert-danger {% endif %} {% endif %}">              
                         {% for field in fields %}
                             <td>{% get_data data field %}</td>
                         {% endfor %}
