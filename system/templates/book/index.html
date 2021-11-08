@@ -12,6 +12,7 @@
 {% block body %}
     
     {% include "components/form.html" %}
+    {% include "components/search.html" %}    
     {% include "components/table.html" %}
 
 {% endblock %}
@@ -45,4 +46,5 @@
             })
         }
     </script>
+    <script src="{% static 'js/search.js' %}"></script>
 {% endblock %}

@@ -9,5 +9,11 @@
 
 
 {% block body %}
+    {% include "components/search.html" %}
     {% include "components/table.html" %}
+{% endblock %}
+
+
+{% block script %}
+    <script src="{% static 'js/search.js' %}"></script>
 {% endblock %}
