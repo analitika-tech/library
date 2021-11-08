@@ -21,8 +21,6 @@
         const deleteList = document.querySelectorAll(".btn-close");
         const rows = document.getElementsByClassName("trow");
 
-        console.log(rows)
-        
         // Deleting the issued book
         for(let i = 0; i < deleteList.length; i++){
             deleteList[i].addEventListener("click", () => {
@@ -55,13 +53,34 @@
                     url: url,
                     success: response =>{
                         console.log(response.returnStatus, response.returnDate, response.debt)
+                        const element = deleteList[i].parentNode.parentNode // Table row
                         if(response.returnStatus){
-                            const element = document.querySelectorAll(`[data-id=${ response.id }]`);
-                            element.classList.add("alert-success")
+                            // Change row color
+                            element.classList.add("alert-success");
+                            element.classList.remove("alert-danger");
+                            
+                            // Updating the row data
+                            let td = element.getElementsByTagName("td")[4]
+                            let status = element.getElementsByTagName("td")[5]
+                            let debt = element.getElementsByTagName("td")[6]
+
+                            td.innerHTML = response.returnDate
+                            status.innerHTML = response.returnStatus
+                            debt.innerHTML = response.debt
                         }
                         else{
-                            const element = document.querySelectorAll(`[data-id=${ response.id }]`);
-                            element.classList.add("alert-danger")
+                            // Change row color
+                            element.classList.remove("alert-success");
+                            element.classList.add("alert-danger");
+
+                            // Updating the row data
+                            let td = element.getElementsByTagName("td")[4]
+                            let status = element.getElementsByTagName("td")[5]
+                            let debt = element.getElementsByTagName("td")[6]
+
+                            td.innerHTML = "None"
+                            status.innerHTML = "False"
+                            debt.innerHTML = "0.00"
                         }
                     },
                     error: error =>{

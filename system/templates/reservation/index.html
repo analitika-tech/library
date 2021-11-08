@@ -19,8 +19,15 @@
         const form = document.getElementById("register-form");
         const csrf = document.getElementsByName("csrfmiddlewaretoken");
         const deleteList = document.querySelectorAll(".btn-close");
-        
+
         for(let i = 0; i < deleteList.length; i++){
+
+            let element = deleteList[i].parentNode.parentNode;
+            let allowed = element.getElementsByTagName("td")[8];
+            if(allowed.innerHTML == "False"){
+                deleteList[i].classList.add("disabled")
+            }
+
             deleteList[i].addEventListener("click", () => {
                 const url = `${ form.dataset.url }actions/${ deleteList[i].dataset.id }`;
                 console.log(url)
