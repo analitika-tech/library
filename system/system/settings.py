@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'system.urls'
@@ -141,6 +142,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 TIME_ZONE = 'Europe/Sarajevo'
 DATE_INPUT_FORMATS = ('%d-%m-%Y')
@@ -149,3 +151,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Session settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+django_heroku.settings(locals())
