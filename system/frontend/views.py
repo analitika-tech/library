@@ -189,8 +189,15 @@ class ReservationGPView(View):
         if request.method == "POST":
             form = ReservationForm(request.POST)
             if form.is_valid():
-                form.cleaned_data["professor"] = request.user
-                form.save()
+                # Updating the book DB
+                book = Book.objects.get(id = form.cleaned_data["book"].id)
+                book.quantity -= form.cleaned_data["quantity"]
+                book.save()
+
+                # Saving the user 
+                data = form.save(commit = False)
+                data.professor = request.user.get_full_name()
+                data.save()
                 return redirect("reservation-view")
         
         context = {
