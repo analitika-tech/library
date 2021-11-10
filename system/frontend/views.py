@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponseNotAllowed
 from django.views import View
+from django.core.exceptions import ValidationError
 
 # Decorators
 from django.utils.decorators import method_decorator
 from .decorators import allowerd_users
 
 from datetime import date
+import json
 
 # Models and Forms
 from backend.models import Book, Class, Student, Issue, Reservation
@@ -237,13 +239,19 @@ class ReservationPDView(View):
     @method_decorator(allowerd_users(["reservation-editing"]))
     def delete(self, request, pk):
         reservation = self.get_object(pk)
-        
-        book = Book.objects.get(id = reservation.book.id)
-        book.quantity += reservation.quantity
-        book.save()
+        error = JsonResponse({"error": "Sve knjige nisu vraćene!"})
 
-        reservation.delete()
-        return JsonResponse(dict(code = 204, content = "Rezervacija je izbrisana!"))
+        if request.is_ajax():
+            if reservation.issued == reservation.returned:
+                book = Book.objects.get(id = reservation.book.id)
+                book.quantity += reservation.quantity
+                book.save()
+
+                reservation.delete()
+                return JsonResponse(dict(code = 204, content = "Rezervacija je izbrisana!"))
+        error.status_code = 403
+        return error
+            
 
 
 class IssueGPView(View):

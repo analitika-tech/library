@@ -9,6 +9,8 @@
 
 {% block body %}
 
+    <div class="alert alert-danger" role="alert" id="error-message"></div>
+
     {% include "components/form.html" %}
     {% include "components/table.html" %}
     
@@ -18,6 +20,8 @@
         const form = document.getElementById("register-form");
         const csrf = document.getElementsByName("csrfmiddlewaretoken");
         const deleteList = document.querySelectorAll(".btn-close");
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.style.display = "none";
 
         for(let i = 0; i < deleteList.length; i++){
 
@@ -29,7 +33,6 @@
 
             deleteList[i].addEventListener("click", () => {
                 const url = `${ form.dataset.url }actions/${ deleteList[i].dataset.id }`;
-                console.log(url)
                 $.ajax({
                     type: "DELETE",
                     headers: {"X-CSRFToken": csrf[0].value},
@@ -39,7 +42,8 @@
                         item.parentNode.removeChild(item);
                     },
                     error: error =>{
-                        console.log(error)
+                        errorMessage.style.display = "block";
+                        errorMessage.innerHTML = error.responseJSON.error;
                     },
                     cache: false,
                     contentType: false,

@@ -20,14 +20,18 @@ The releases will first be in beta channel and once they passed have passed the 
 
 ### 0.0.1 - Alpha
 
-The app is in it's first release cycle and is currently relesed as 0.0.1 Beta and it's available for testing. As we have deployed the app today we discovered some inconsistencies and bugs which will be fixed in the comming days.
+The app is in it's first release cycle and is currently relesed as 0.0.1 Alpha and it's available for testing. As we have deployed the app today we discovered some inconsistencies and bugs which will be fixed in the comming days.
 
 
 | ✔️ Expected behaviour        | ❌ Current behaviour | Status |
 | ----------- | ----------- | ----------- |
 | Only the booked Reservations should appear for each user | All Reservations show up on every usere's page | ✔️
-| Create the automated tests with selenium and unit tests. | No test at all                                | ❌
-| Delete button must be disabled from the view not just by class | Disabled just by class                  | ❌
+| Create the automated tests with selenium and unit tests. | No test at all                                 | ❌
+| Delete button must be disabled from the view not just by class | Disabled just by class                   | ✔️
+| Adjust navbar items to user permissions | User has all nav items on his navbar and error message is displayed if he does not have the permission to visit it | ❌
+| Display error message to user | It just logs them into the console | ✔️
+
+
 As we discover issues they will be added to this table. You can track the status of the issues in the issues panel or in this table.
 
 
