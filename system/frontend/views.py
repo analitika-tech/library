@@ -96,8 +96,19 @@ class BookPDView(View):
     @method_decorator(allowerd_users(["book-editing"]))
     def delete(self, request, pk):
         book = self.get_object(pk)
-        book.delete()
-        return JsonResponse(dict(code = 204, content = "Knjiga je izbrisana"))
+        error = JsonResponse({"error": "Sve knjige nisu vraćene!"})
+
+        if not Reservation.objects.get(book = book):
+            book.delete()
+            return JsonResponse(dict(code = 204, content = "Knjiga je izbrisana"))
+        else:
+            reservation = Reservation.objects.get(book = book)
+            if reservation.issued == reservation.returned:
+                book.delete()
+                return JsonResponse(dict(code = 204, content = "Knjiga je izbrisana"))
+
+        error.status_code = 403
+        return error
 
 
 class StudentGPView(View):
