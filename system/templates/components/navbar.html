@@ -6,21 +6,29 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == '/home/' %} active {% endif %}" href="{% url 'home-view' %}">Početna</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == '/book/' %} active {% endif %}" href="{% url 'book-view' %}">Knjige</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == '/student/' %} active {% endif %}" href="{% url 'student-view' %}">Učenici</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == '/issue/' %} active {% endif %}" href="{% url 'issue-view' %}">Izdavanje knjiga</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == '/reservation/' %} active {% endif %}" href="{% url 'reservation-view' %}">Rezervacija knjiga</a>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/home/' %} active {% endif %}" href="{% url 'home-view' %}">Početna</a>
+          </li>
+          {% for group in request.user.groups.all %}
+            {% if group.name ==  "book-editing" %}
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/book/' %} active {% endif %}" href="{% url 'book-view' %}">Knjige</a>
+              </li>
+            {% elif group.name == "student-editing" %}
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/student/' %} active {% endif %}" href="{% url 'student-view' %}">Učenici</a>
+              </li>
+            {% elif group.name == "issue-editing" %}
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/issue/' %} active {% endif %}" href="{% url 'issue-view' %}">Izdavanje knjiga</a>
+              </li>
+            {% elif group.name == "reservation-editing" %}
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/reservation/' %} active {% endif %}" href="{% url 'reservation-view' %}">Rezervacija knjiga</a>
+              </li>
+            {% endif %}
+
+          {% endfor %}
       </ul>
       <ul class="navbar-nav ml-auto">
         {% if request.user.is_authenticated %}
