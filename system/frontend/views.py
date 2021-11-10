@@ -168,7 +168,7 @@ class StudentPDView(View):
 class ReservationGPView(View):
     @method_decorator(allowerd_users(["reservation-editing"]))
     def get(self, request):
-        reservation = Reservation.objects.all()
+        reservation = Reservation.objects.filter(professor = request.user.get_full_name())
         form = ReservationForm()
         fields = get_fields(Reservation, "issue")
 

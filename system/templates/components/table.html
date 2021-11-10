@@ -17,9 +17,11 @@
                 {% for data in querySet %}
 
                     <tr class="trow{% if request.path == '/issue/' or request.path == '/reservation/' %} {% if data.returnStatus %} alert-success {% else %} alert-danger {% endif %} {% endif %}">              
-                        {% for field in fields %}
+                        
+                        {% for field in fields %}    
                             <td>{% get_data data field %}</td>
                         {% endfor %}
+
                         {% if request.path != "/" %}
                             <td><button type="button" class="btn-close" aria-label="Close" data-id="{{ data.id }}" id="delete-item"></button></td>
                         {% endif %}
@@ -35,3 +37,5 @@
         </tbody>
     </table>
 </div>
+
+{{ request.user.get_full_name }}
