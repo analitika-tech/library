@@ -1,64 +1,58 @@
 from django.test import TestCase, Client
-from datetime import date, timedelta
+from django.contrib.auth.models import User
+
+from rest_framework.test import APIRequestFactory
+
 from prettytable import PrettyTable
+from secrets import token_hex
+import json
 
 # Models
 from .models import Book, Class, Student, Reservation, Issue
+from .serializers import BookSerializer, ClassSerializer, StudentSerializer
+# Views
+from .views import BookAPIView, ClassAPIView, StudentAPIView
 
-# Book Model Fields = name:str, author:str, year:int, quantity:int
-books = [
-    ["Oliver Twist", "Charles Dickens", 1838, 50],
-    ["The Little Prince", "Antoine de Saint-Exupéry", 1943, 150],
-    ["The Old Man and the Sea", "Ernest Hemingway", 1952, 30],
-    ["Romeo and Juliet", "William Shakespeare", 1597, 10],
-    ["Hamlet", "William Shakespeare", 1603, 50]]
-
-
-# Class Model Fields = name:str, professor:str
-classes = [
-    ["Class 1", "Prof 1"],
-    ["Class 2", "Prof 2"],
-    ["Class 3", "Prof 3"]]
-
-
-# Student Model Fields = first_name:str, last_name:str, classes:Foreign Key
-students = [
-    ["Rajon", "Rondo", classes[0][0]],
-    ["Leborn", "James", classes[1][0]],
-    ["Russell", "Westbrook", classes[2][0]]]
-
-
-# Reservation Model Fields = startDate:date, endData:date, professor:str, book:Foreign Key, quantity:int, returned:int, issued:int, returnStatus:bool
-reservations = [
-    [date.today(), date.today() + timedelta(20), "Prof 1", "Oliver Twist", 15],
-    [date.today(), date.today() + timedelta(10), "Prof 2", "Romeo and Juliet", 10],
-    [date.today(), date.today() + timedelta(15), "Prof 3", "The Old Man and the Sea", 20]]
-
-# Issue Model Fields = reservation:Foreign Key, student: Foreign Key, leaseDate: date, returnDate: date, returnStatus: bool, deb:int
-issues = [
-    [1, 1, date.today() + timedelta(1)],
-    [2, 2, date.today() + timedelta(3)],    
-    [3, 3, date.today() + timedelta(5)]]
+# Data
+from .data import books, classes, students, reservations, issues, paths
 
 # Testing the basic model functionality
 
 # Book model testing
 class BackendTest(TestCase):
+    def __init__(self, *args, **kwargs):
+        # Global params
+        self.password = token_hex(15)
+        self.username = "backend.testing"
+        self.factory = APIRequestFactory()
+    
+        # Creating the superuser
+        # self.user = User.objects.create_superuser(username = self.username, password = self.password)
+        
+        # Global lists
+        self.views = [BookAPIView.as_view(), ClassAPIView.as_view(), StudentAPIView.as_view()]
+        self.bookData, self.classData, self.studentData = [], [], []
+
+        super(BackendTest, self).__init__(*args, **kwargs)
+
     def setUp(self):
         """Inserting data into the models"""
         
         # Book model
         for book in books:
             Book.objects.create(name = book[0], author = book[1], year = book[2], quantity = book[3])
-
+        self.bookData.append(Book.objects.all())
+        
         # Class model
         for clss in classes:
             Class.objects.create(name = clss[0], professor = clss[1])
+        self.classData.append(Class.objects.all())
 
         # Student model
         for student in students:
             Student.objects.create(first_name = student[0], last_name = student[1], classes = Class.objects.get(name = student[2]))
-        
+        self.studentData.append(Student.objects.all())
+            
         # Reservation model
         for reservation in reservations:
             Reservation.objects.create(
@@ -74,19 +68,38 @@ class BackendTest(TestCase):
                 reservation = Reservation.objects.get(id = issue[0]),
                 student = Student.objects.get(id = issue[1]),
                 leaseDate = issue[2])
-
-
+            
     def test_querySet_all(self):
         test1 = Book.objects.all()
         test2 = Class.objects.all()
         test3 = Student.objects.all()
         test4 = Reservation.objects.all()
         test5 = Issue.objects.all()
+    
 
         table = PrettyTable(["Book", "Class", "Student", "Reservation", "Issue"])
         for (book, clss, student, reservation, issue) in zip(test1, test2, test3, test4, test5):
             table.add_row([book, clss, student, reservation, issue])
         print(table)
         
-            
-    
+                
+    def test_api_get(self):
+        """Testing the get method on the apis"""
+        login = self.client.login(username = self.username, password = self.password)      
+        
+        for (path, view) in zip(paths, self.views):
+            request = self.factory.get(path)
+            response = view(request)
+            print(response)
+
+    def test_api_delte(self):
+        """Testing the delete method on the apis"""
+        login = self.client.login(username = self.username, password = self.password)      
+               
+        for (path, view) in zip(paths, self.views):
+            request = self.factory.delete(path)
+            response = view(request)
+            print(response)
+
+
+        

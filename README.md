@@ -43,26 +43,26 @@ To deploy the app you first need to find your web host, we used Heroku because i
 
 To run the project localy first clone the project:
 ``` bash
-    git clone git@github.com:analitika-tech/library.git
+git clone git@github.com:analitika-tech/library.git
 ```
 
 Setup the virtual environment:
 ```bash
-    # Create the virtual environment
-    python3 -m venv env
-    
-    # Activate the virtual environment Linux
-    source env/bin/activate
+# Create the virtual environment
+python3 -m venv env
 
-    # Install the required packages from the requirements.txt
-    pip install -r requirements.txt
+# Activate the virtual environment Linux
+source env/bin/activate
+
+# Install the required packages from the requirements.txt
+pip install -r requirements.txt
 ```
 
 After you setup the environment run:
 ```bash
-    # To migrate all the DB models
-    python manage.py migrate
+# To migrate all the DB models
+python manage.py migrate
 
-    # Run the server by typing
-    python manage.py runserver
+# Run the server by typing
+python manage.py runserver
 ```

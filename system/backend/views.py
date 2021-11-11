@@ -16,10 +16,14 @@ class BookAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format = None):
-        serializer = BookSerializer(data = request.data)
+        serializer = BookSerializer(data = request.data, many = True)
         if serializer.is_valid():
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, format = None):
+        Book.objects.all().delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 class ClassAPIView(APIView):
     def get(self, request, format = None):
@@ -28,10 +32,14 @@ class ClassAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format = None):
-        serializer = ClassSerializer(data = request.data)
+        serializer = ClassSerializer(data = request.data, many = True)
         if serializer.is_valid():
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format = None):
+        Class.objects.all().delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
 class StudentAPIView(APIView):
     def get(self, request, format = None):
@@ -40,7 +48,11 @@ class StudentAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format = None):
-        serializer = StudentSerializer(data = request.data)
+        serializer = StudentSerializer(data = request.data, many = True)
         if serializer.is_valid():
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, format = None):
+        Student.objects.all().delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
