@@ -32,4 +32,4 @@ issues = [
     [3, 3, date.today() + timedelta(5)]]
 
 # API paths
-paths = ["/bookapi/", "/classapi/", "/studentapi/"]
+paths = ["bookapi/", "classapi/", "studentapi/"]

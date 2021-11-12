@@ -7,31 +7,17 @@ from prettytable import PrettyTable
 from secrets import token_hex
 import json
 
-# Models
-from .models import Book, Class, Student, Reservation, Issue
-from .serializers import BookSerializer, ClassSerializer, StudentSerializer
-# Views
-from .views import BookAPIView, ClassAPIView, StudentAPIView
+from .models import Book, Class, Student, Reservation, Issue # Models
+from .views import BookAPIView, ClassAPIView, StudentAPIView # Views
+from .data import books, classes, students, reservations, issues, paths # Data for testing ./data.py
 
-# Data
-from .data import books, classes, students, reservations, issues, paths
-
-# Testing the basic model functionality
-
-# Book model testing
 class BackendTest(TestCase):
     def __init__(self, *args, **kwargs):
         # Global params
         self.password = token_hex(15)
         self.username = "backend.testing"
         self.factory = APIRequestFactory()
-    
-        # Creating the superuser
-        # self.user = User.objects.create_superuser(username = self.username, password = self.password)
-        
-        # Global lists
-        self.views = [BookAPIView.as_view(), ClassAPIView.as_view(), StudentAPIView.as_view()]
-        self.bookData, self.classData, self.studentData = [], [], []
+        self.views = [BookAPIView.as_view(), ClassAPIView.as_view(), StudentAPIView.as_view()] # API Views
 
         super(BackendTest, self).__init__(*args, **kwargs)
 
@@ -41,17 +27,14 @@ class BackendTest(TestCase):
         # Book model
         for book in books:
             Book.objects.create(name = book[0], author = book[1], year = book[2], quantity = book[3])
-        self.bookData.append(Book.objects.all())
         
         # Class model
         for clss in classes:
             Class.objects.create(name = clss[0], professor = clss[1])
-        self.classData.append(Class.objects.all())
 
         # Student model
         for student in students:
             Student.objects.create(first_name = student[0], last_name = student[1], classes = Class.objects.get(name = student[2]))
-        self.studentData.append(Student.objects.all())
             
         # Reservation model
         for reservation in reservations:
@@ -91,6 +74,7 @@ class BackendTest(TestCase):
             request = self.factory.get(path)
             response = view(request)
             print(response)
+        self.client.get("logout/")
 
     def test_api_delte(self):
         """Testing the delete method on the apis"""
@@ -101,5 +85,20 @@ class BackendTest(TestCase):
             response = view(request)
             print(response)
 
+        self.client.get("logout/")
 
+    def test_api_post(self):
+        """Testing the post method on the apis"""
+        login = self.client.login(username = self.username, password = self.password)      
         
+        # Formating the data
+        dataSet = [
+             [{"name": book[0], "author": book[1], "year": book[2], "quantity": book[3]} for book in books],
+             [{"name": clss[0], "professor": clss[0]} for clss in classes],
+             [{"first_name": student[0], "last_name": student[1], "classes": Class.objects.get(name = student[2]).id} for student in students]
+        ]
+
+        for (path, data, view) in zip(paths, dataSet, self.views):
+            request = self.factory.post(path, json.dumps(data, indent = 4), content_type = "application/json")
+            print(view(request))
+        self.client.get("logout/")
