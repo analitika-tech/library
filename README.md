@@ -26,7 +26,7 @@ The app is in it's first release cycle and is currently relesed as 0.0.1 Alpha a
 | ✔️ Expected behaviour        | ❌ Current behaviour | Status |
 | ----------- | ----------- | ----------- |
 | Only the booked Reservations should appear for each user | All Reservations show up on every usere's page | ✔️
-| Create the automated tests with selenium and unit tests. | No test at all                                 | ❌
+| Create the automated tests with selenium and unit tests. | No test at all                                 | ✔️
 | Delete button must be disabled from the view not just by class | Disabled just by class                   | ✔️
 | Adjust navbar items to user permissions | User has all nav items on his navbar and error message is displayed if he does not have the permission to visit it | ✔️ 
 | Display error message to user | It just logs them into the console | ✔️
