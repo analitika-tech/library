@@ -18,6 +18,10 @@ class BackendTest(TestCase):
         self.username = "backend.testing"
         self.factory = APIRequestFactory()
         self.views = [BookAPIView.as_view(), ClassAPIView.as_view(), StudentAPIView.as_view()] # API Views
+        
+        # Creating super user if it not exists
+        if not User.objects.filter(username = self.username).exists():
+            self.user = User.objects.create_superuser(username = self.username, password = self.password)            
 
         super(BackendTest, self).__init__(*args, **kwargs)
 
@@ -73,7 +77,7 @@ class BackendTest(TestCase):
         for (path, view) in zip(paths, self.views):
             request = self.factory.get(path)
             response = view(request)
-            print(response)
+            self.assertTrue(response.status_code, 200)
         self.client.get("logout/")
 
     def test_api_delte(self):
@@ -83,8 +87,7 @@ class BackendTest(TestCase):
         for (path, view) in zip(paths, self.views):
             request = self.factory.delete(path)
             response = view(request)
-            print(response)
-
+            self.assertTrue(response.status_code, 204)
         self.client.get("logout/")
 
     def test_api_post(self):
@@ -100,5 +103,6 @@ class BackendTest(TestCase):
 
         for (path, data, view) in zip(paths, dataSet, self.views):
             request = self.factory.post(path, json.dumps(data, indent = 4), content_type = "application/json")
-            print(view(request))
+            response = view(request)
+            self.assertTrue(response.status_code, 201)
         self.client.get("logout/")
