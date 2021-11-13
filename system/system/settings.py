@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os, dj_database_url, environ
+import os, dj_database_url, environ, django_heroku
 from decouple import config
 
 
@@ -152,5 +152,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Session settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-import django_heroku
-django_heroku.settings(locals())
+if "I_AM_HEROKU" in os.environ or env("I_AM_HEROKU") == True:
+    import django_heroku
+    django_heroku.settings(locals())
