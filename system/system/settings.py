@@ -153,4 +153,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 import django_heroku
-django_heroku.settings(locals(), test_runner=False)
+django_heroku.settings(locals())
