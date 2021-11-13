@@ -134,7 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -152,6 +152,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Session settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-if "I_AM_HEROKU" in os.environ or env("I_AM_HEROKU") == True:
-    import django_heroku
-    django_heroku.settings(locals())
+django_heroku.settings(locals(), test_runner = False)
