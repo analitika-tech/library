@@ -30,4 +30,5 @@ jobs:
     - name: Run Tests
       run: |
         cd system
+        python manage.py migrate
         python manage.py test backend
