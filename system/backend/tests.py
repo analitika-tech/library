@@ -19,7 +19,7 @@ class BackendTest(TestCase):
         self.factory = APIRequestFactory()
         self.views = [BookAPIView.as_view(), ClassAPIView.as_view(), StudentAPIView.as_view()] # API Views
         
-        # Creating super user if it not exists
+        # Creating superuser if it not exists
         if not User.objects.filter(username = self.username).exists():
             self.user = User.objects.create_superuser(username = self.username, password = self.password)            
 
