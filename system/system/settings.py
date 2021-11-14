@@ -152,6 +152,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Session settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+# REST FRAMEWORK CORE API CONFIG:
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema"
+}
+
 if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
     django_heroku.settings(locals())
 else:
