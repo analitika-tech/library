@@ -31,7 +31,12 @@ The app is in it's first release cycle and is currently relesed as 0.0.1 Alpha a
 | Adjust navbar items to user permissions | User has all nav items on his navbar and error message is displayed if he does not have the permission to visit it | ✔️ 
 | Display error message to user | It just logs them into the console | ✔️
 | Can't delete a book if it is reservated | You can delete a book even if it is reservated | ✔️
-
+| Bosnian language support | Mix of Bosnian and English | ❌
+| Table UI fixing issues | Broken | ❌
+| Navbar UI display all urls | not displaying all sites that can be vistied | ❌
+| API Documentation site | No documentation at all | ❌
+| Software Documentation site | No documentation at all | ❌
+| Frontend testing| No frontend test at all | ❌
 
 As we discover issues they will be added to this table. You can track the status of the issues in the issues panel or in this table.
 
