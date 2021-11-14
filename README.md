@@ -1,4 +1,4 @@
-![Bower](https://img.shields.io/bower/l/library?color=%23000) ![example workflow](https://github.com/analitika-tech/library/actions/workflows/django.yml/badge.svg) [![Python 3.6](https://img.shields.io/badge/python-3.8.1-blue.svg)](https://www.python.org/downloads/release/python-360/) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/analitika-tech/library?include_prereleases&label=release%20v0.0.1%20-%20alpha)
+![Bower](https://img.shields.io/bower/l/library?color=%23000) ![example workflow](https://github.com/analitika-tech/library/actions/workflows/django.yml/badge.svg) [![Python 3.6](https://img.shields.io/badge/python-3.8.1-blue.svg)](https://www.python.org/downloads/release/python-381/) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/analitika-tech/library?include_prereleases&label=release%20v0.0.1%20-%20alpha)
 
 # Library Management Software (LMS)
 
