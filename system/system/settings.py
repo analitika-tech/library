@@ -152,7 +152,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Session settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"] == True:
-    django_heroku.settings(locals())
-else:
-    django_heroku.settings(locals(), test_runner = False)
+django_heroku.settings(locals())
