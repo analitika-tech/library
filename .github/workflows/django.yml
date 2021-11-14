@@ -1,4 +1,4 @@
-name: Django CI
+name: LMS Continuous integration
 
 on:
   push:

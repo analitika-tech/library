@@ -1,4 +1,5 @@
-![Bower](https://img.shields.io/bower/l/library?color=%23000)
+![Bower](https://img.shields.io/bower/l/library?color=%23000) ![example workflow](https://github.com/analitika-tech/library/actions/workflows/django.yml/badge.svg) [![Python 3.6](https://img.shields.io/badge/python-3.8.1-blue.svg)](https://www.python.org/downloads/release/python-360/) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/analitika-tech/library?include_prereleases&label=release%20v0.0.1%20-%20alpha)
+
 # Library Management Software (LMS)
 
 ## Table of Content
@@ -34,7 +35,7 @@ The app is in it's first release cycle and is currently relesed as 0.0.1 Alpha a
 | Bosnian language support | Mix of Bosnian and English | ❌
 | Table UI fixing issues | Broken | ❌
 | Navbar UI display all urls | not displaying all sites that can be vistied | ❌
-| API Documentation site | No documentation at all | ❌
+| API Documentation site | No documentation at all | ✔️
 | Software Documentation site | No documentation at all | ❌
 | Frontend testing| No frontend test at all | ❌
 
