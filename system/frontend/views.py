@@ -11,13 +11,15 @@ from datetime import date
 import json
 
 # Models and Forms
-from backend.models import Book, Class, Student, Issue, Reservation
-from .forms import BookForm, ClassForm, StudentForm, IssueForm, ReservationForm
+from backend.models import Book, Student, Issue, Reservation
+from backend.fields import book_fields, student_fields, reservation_fields, issue_fields
+from .forms import BookForm, StudentForm, IssueForm, ReservationForm
 from .custom import get_fields
 
 
 def home_view(request):
     books = Book.objects.all()
+    tableFields = book_fields()
     fields = []
     # Model field list
     for field in Book._meta.get_fields():
@@ -27,6 +29,8 @@ def home_view(request):
     context = {
         "querySet": books,
         "fields": fields,
+        "tfields": tableFields[0],
+        "tlength": len(fields),
     }
 
     return render(request, "home.html", context)
@@ -38,6 +42,7 @@ class BookGPView(View):
     @method_decorator(allowerd_users(["book-editing"]))
     def get(self, request):
         books = Book.objects.all()
+        tableFields = book_fields()
         form = BookForm()
         fields = []
 
@@ -50,6 +55,8 @@ class BookGPView(View):
             "fields": fields,
             "querySet": books,
             "form": form,
+            "tfields": tableFields[0],
+            "tlength": len(fields) + 1,
         }
 
         return render(request, "book/index.html", context)
@@ -115,6 +122,7 @@ class StudentGPView(View):
     @method_decorator(allowerd_users(["student-editing"]))
     def get(self, request):
         students = Student.objects.all()
+        tableFields = student_fields()
         form = StudentForm()
         fields = []
 
@@ -128,6 +136,8 @@ class StudentGPView(View):
             "fields": fields,
             "querySet": students,
             "form": form,
+            "tfields": tableFields[0],
+            "tlength": len(fields) + 1,
         }
 
         return render(request, "student/index.html", context)
@@ -182,6 +192,7 @@ class ReservationGPView(View):
     @method_decorator(allowerd_users(["reservation-editing"]))
     def get(self, request):
         reservation = Reservation.objects.filter(professor = request.user.get_full_name())
+        tableFields = reservation_fields()
         form = ReservationForm()
         fields = get_fields(Reservation, "issue")
 
@@ -189,6 +200,8 @@ class ReservationGPView(View):
             "fields": fields,
             "querySet": reservation,
             "form": form,
+            "tfields": tableFields[0],
+            "tlength": len(fields) + 1,
         }
 
         return render(request, "reservation/index.html", context)
@@ -264,11 +277,11 @@ class ReservationPDView(View):
         return error
             
 
-
 class IssueGPView(View):
     @method_decorator(allowerd_users(["issue-editing"]))
     def get(self, request):
         issues = Issue.objects.all()
+        tableFields = issue_fields()
         form = IssueForm()
         fields = [field.name for field in Issue._meta.get_fields()]
 
@@ -276,6 +289,8 @@ class IssueGPView(View):
             "fields": fields,
             "querySet": issues,
             "form": form,
+            "tfields": tableFields[0],
+            "tlength": len(fields) + 1,
         }
 
         return render(request, "issue/index.html", context)

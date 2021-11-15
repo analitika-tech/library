@@ -16,6 +16,13 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = "__all__"
+        
+        labels = {
+            'name': 'Naziv djela',
+            'author': 'Autor djela',
+            'year': 'Godina izdanja',
+            'quantity': 'Količina'
+        }
 
 class ClassForm(forms.ModelForm):
     class Meta:
@@ -26,14 +33,24 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = "__all__"
+    
+        labels = {
+            'first_name': 'Ime',
+            'last_name': 'Prezime',
+            'classes': 'Razred',
+        }
 
 class IssueForm(forms.ModelForm):
-    leaseDate = forms.DateField(widget = DateInput)
+    leaseDate = forms.DateField(widget = DateInput, label = "Datum izdavanja")
 
     class Meta:
         model = Issue
         fields = ["reservation", "student", "leaseDate",]
-
+        
+        labels = {
+            'reservation': 'Rezervacija',
+            'student': 'Učenik',
+        }
     # Lease date
     def clean_leaseDate(self, *args, **kwargs):
         date = self.cleaned_data["leaseDate"]
@@ -59,8 +76,13 @@ class ReservationForm(forms.ModelForm):
         model = Reservation
         fields = ["startDate", "endDate", "book", "quantity",]
 
-    startDate = forms.DateField(widget = DateInput)
-    endDate = forms.DateField(widget = DateInput)
+        labels = {
+            'book': 'Knjiga',
+            'quantity': 'Količina',
+        }
+
+    startDate = forms.DateField(widget = DateInput, label = "Početak rezervacije")
+    endDate = forms.DateField(widget = DateInput, label = "Kraj rezervacije")
 
     # Checking if the start date is valid 
     def clean_startDate(self, *args, **kwargs):

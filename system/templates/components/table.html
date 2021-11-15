@@ -3,8 +3,8 @@
     <table id="table" class="table table-hover">
         <thead>
             <tr>
-                {% for field in fields %}
-                    <th>{{ field }}</th>
+                {% for tfield in tfields %}
+                    <th>{{ tfield }}</th>
                 {% endfor %}
                 {% if request.path != "/" %}
                     <th>Delete</th>
@@ -31,7 +31,7 @@
                     
             {% else %}
                     
-                <tr><td class="table-danger">Nemate podataka za prikaz</td></tr>
+                <tr><td colspan="{{ tlength }}" class="table-danger" style="text-align: center;">Nemate podataka za prikaz</td></tr>
 
             {% endif %}
         </tbody>
