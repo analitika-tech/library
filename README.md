@@ -38,7 +38,7 @@ The app is in it's first release cycle and is currently relesed as 0.0.1 Alpha a
 | API Documentation site | No documentation at all | ✔️
 | Software Documentation site | No documentation at all | ❌
 | Frontend testing| No frontend test at all | ❌
-
+| No items behind the navbar | Navbar was overlaping the body content in mobile view | ✔️
 As we discover issues they will be added to this table. You can track the status of the issues in the issues panel or in this table.
 
 
