@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 
@@ -143,14 +144,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
-if not DEBUG:
-    MIDDLEWARE += 'whitenoise.middleware.WhiteNoiseMiddleware',
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# if not DEBUG:
+#     MIDDLEWARE += 'whitenoise.middleware.WhiteNoiseMiddleware',
+#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
-    if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
-        django_heroku.settings(locals())
-    else:
-        django_heroku.settings(locals(), test_runner = False)
+#     if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
+#         django_heroku.settings(locals())
+#     else:
+#         django_heroku.settings(locals(), test_runner = False)
 
 
 TIME_ZONE = 'Europe/Sarajevo'
@@ -165,3 +166,10 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema"
 }
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
+    django_heroku.settings(locals())
+else:
+    django_heroku.settings(locals(), test_runner = False)
