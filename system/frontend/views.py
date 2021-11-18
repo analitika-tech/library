@@ -38,6 +38,9 @@ def home_view(request):
 def error_view(request):
     return render(request, "components/error.html")
 
+def tutorial_view(request):
+    return render(request, "tutorial/index.html")
+
 class BookGPView(View):
     @method_decorator(allowerd_users(["book-editing"]))
     def get(self, request):

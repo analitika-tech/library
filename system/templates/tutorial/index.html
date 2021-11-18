@@ -1,0 +1,587 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+
+    <link rel="stylesheet" href="{% static 'tutorial/css/index.css' %}">
+    <title>Pomoć</title>
+
+{% endblock %}
+
+
+{% block body %}
+
+
+    <aside id="content-table" >
+        <h1 class="h1">Sadržaj</h1>
+        <ul>
+            <li>
+                <a href="#welcome">Uvod</a>
+                <ul>
+                    <li><a href="#login">Prijava</a></li>
+                    <li><a href="#logout">Odjava</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#administration">Administracija</a>
+                <ul>
+                    <li><a href="#admin-creation">Kreiranje admina</a></li>
+                    <li><a href="#user-creation">Kreiranje korisnika</a></li>
+                    <li><a href="#permissions">Davanje prava korisnicima</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#function">Funkcionalnosti aplikacije</a>
+                <ul>
+                    <li><a href="#home">Početna stranica</a></li>
+                    <li><a href="#book">Uređivanje knjiga</a></li>
+                    <li><a href="#student">Uređivanje učenika</a></li>
+                    <li><a href="#issue">Izdavanje knjiga</a></li>
+                    <li><a href="#reservation">Rezervacija knjiga</a></li>
+                </ul>
+            </li>
+        </ul>
+        
+    </aside>
+    
+    <div id="content" class="container-fluid">
+        <h1 class="h1" id="welcome">Uvod</h1>
+        <p>
+            Dobro došli na stranicu dokumentacije web aplikacije Library Management System (LMS). U okviru ovog dokumenta možete pronaći informacije
+            o aplikaciji koje su vezane za njen način rada, njene funkcionalnosti i nedostaci, šta ukoliko se desi greška u okviru aplikacije?, te
+            gdje možete pronaći njen kod i modifikacije.
+        </p>
+        <p>
+            Sav kod koji je napisan za ovu stranicu možete pronaći na <a href="https://github.com/analitika-tech/library"><img src="{% static 'tutorial/images/GitHub-Mark-32px.png' %}" width="25px"  alt="Github logo"> Github</a>
+            Ukoliko primjetite da pojedini dijelovi aplikacije ne funkcionišu kako bi trebali <a href="https://github.com/analitika-tech/library/issues/new">kliknite ovdje</a> i opišite probelm.
+            U naslovu napišite problem, a u sadržaju detljnije obradite problem.
+        </p>
+        <p>
+            Isto vrijedi i za sugestije i nove funkcionalnosti.
+        </p>
+        
+        <h2 class="h2" id="login">Prijava</h2>
+        <p>
+            Da bi ste se prijavili na stranicu potrebno je da imate izrađen račun kojeg dobijate od vašeg administratora. Administrator Vas dodaje u bazu podataka gdje
+            unosi vaše podatke. Nakon što dobijete podatke ispunjavate formu i prijavljujete se.          
+        </p>
+        <div class="embedded">
+            <label for="username">Username*</label>
+            <input class="form-control" id="username" type="text" value="testing.user">
+            <label for="password">Password*</label>
+            <input class="form-control" id="password" type="password" value="testingthisuser">
+            <input type="submit" class="btn btn-success" value="Prijava" id="register-button">
+        </div>
+        <p>
+            Nakon što se uspješno prijavite otvoriti će vam se početna stranica kojoj možete pristupiti i bez da ste prijavljeni, ali
+            ono što je promjenjeno jeste navigaciona traka koja će uz početnu stranicu i stranicu za pomoć korisnicima prikazati i stranice
+            za koje imate odobrenja da koristite.
+        </p>
+        <p>
+            Uz to u desnom gornjem uglu će se prikazati vaše korisničko ime i opcija da se odjavite "Logout"
+        </p>
+        <div class="bd-example">
+              <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="#">JU MSŠ "Omer Filipović" Ključ</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#preview" aria-controls="preview" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="preview">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Početna</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Pomoć</a>
+                        </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="#">Knjige</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="#">Učenici</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="#">Izdavanje knjiga</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="#">Rezervacija knjiga</a>
+                            </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                          <a class="nav-link active disabled">testing.user</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#">Logout</a>
+                        </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+        </div>
+        <h2 class="h2" id="logout">Odjava</h2>
+        <p>
+            Da bi se korisnik odjavio u desnom gornjem uglu možete pronaći "Logout" dugme koje kada ga kliknete će vas odjaviti i odvesti na stranicu
+            prijave gdje se ponovo možete prijaviti.
+        </p>
+        <h1 id="administration">Administracija</h1>
+        <p>
+            Kako bi pristupili admin ploči morate ukucati link vaše stranice i uz to dodati <strong>/admin</strong>, primjer:
+        </p>
+        <div class="embedded" style="text-align: center;"><p> https://application.herokuapp.com/admin</p></div>
+        <p>
+            Tu će vam se prikazati slična forma koju ste prethodno mogli da vidite, u koju takođe unosite vaše korisničko ime
+            i lozinku.
+        </p>
+        <h2 class="h2" id="admin-creation">Kreiranje adminstratora</h2>
+        <p>
+            Da bi kreirali administratora morate da se prijavite na stranicu gdje je vaša web aplikacija deployana. Nakon što
+            to učinite ulazite u terminal virtualne mašine i pišete u terminal slijedeću komandu:
+        </p>
+        <code>python manage.py createsuperuser</code>
+        <p>
+            Nakon što pokrenete ovu komandu automatski će vam se pokazati polja gdje unosite korisničko ime (po želji), ovo polje je obavezno, 
+            email koji je nije obavezan, te lozinku koja je takođe obavezna. Kad kreirate vaš profil možete da se prijavite na linku kojeg smo u 
+            uvodu ovog poglavlja predočili.
+        </p>
+        <h2 class="h2" id="user-creation">Kreiranje korisnika</h2>
+        <p>
+            Da bi administrator kreirao budućeg korisnika potrebno je da mu izradi korisnički račun. To će uraditi na slijedeći
+            način. U okviru administracione ploče moći će vidjeti dvije sekcije koje u sebi sadrže različite vrste baza podataka, od
+            kojih prva sekcija sadrži bazu podataka o korisnicima i pravima koja se daju korisnicima, te drugu sekciju koja sadrži
+            baze podataka o knjigama, razredima, izdatim knjigama, rezervacijama knjiga, učenicima.
+            <ul>
+                <li>
+                    AUTHENTICATION AND AUTHORIZATION
+                    <ul>
+                        <li>Groups</li>
+                        <li>Users</li>
+                    </ul>
+                </li>
+                <li>
+                    BACKEND
+                    <ul>
+                        <li>Books</li>
+                        <li>Classes</li>
+                        <li>Issues</li>
+                        <li>Reservations</li>
+                        <li>Students</li>
+                    </ul>
+                </li>
+            </ul>
+            Da bi izradio novog korisnika administrator će kliknuti <strong>Useres</strong> dugme, te će mu se nakon toga otvoriti
+            stranica gdje će u gornjem desnom uglu pronaći dugme <strong>ADD USER +</strong> na koje će kliknuti, te će mu se otvoriti
+            nova stranica da unese slijedeće podatke:
+            <ul>
+                <li>Username (Korisničko ime)</li>
+                <li>Password (Lozinka)</li>
+                <li>Password confirmation (Potvrđivanje lozinke)</li>
+            </ul>
+            Naša preporuka za kreiranje korisničkog imena je da stavite <strong>ime.prezime: dzenan.dzafic</strong>
+            Nako što unesete sve podatke pritisnite dugme <strong>SAVE</strong>.
+            Nakon toga će vam se otvoriti nova stranica gdje možete detaljno opišete korisnika u dodatnim poljima koja imate.
+        </p>
+        <p>
+            Sad moramo naglasiti da polja:
+            <ul>
+                <li>First name: (Ime)</li>
+                <li>Last name: (Prezime)</li>
+            </ul>
+            su jako bitna i nesmiju biti izostavljena.
+        </p>
+        <p>
+            Nakon što ispunite data polja slijedi da date prava korisniku koje stranice može da posjećuje <strong>ne napuštajte trenutnu stranicu!</strong>
+        </p>
+        <h2 class="h2" id="permissions">Davanje prava korisnicima</h2>
+        <p>
+            Da bi dali prava korisnicima morate odrediti šta će korisnik da radi. Ukoliko je korisnik radnik u biblioteci
+            potrebno je da ima sljedća prava:
+            <ul>
+                <li>Dodavanje novih knjiga <strong>(book-editing)</strong></li>
+                <li>Dodavanje učenika <strong>(student-editing)</strong></li>
+                <li>Izdavanje knjiga učenicima<strong>(issue-editing)</strong></li>
+            </ul>
+            Ukoliko je korisnik profesor koji želi da rezerviše knjigu za svoje učenike potrebno je da ima sljedeća prava:
+            <ul>
+                <li>Rezervisanje knjiga <strong>(reservation-editing)</strong></li>
+            </ul>
+        </p>
+        <div class="embedded">
+            <h5 class="h5">Groups:</h5>
+            <div class="groups">
+                <div id="available">
+                    <h6 class="h6" style="margin: 10px;">Dostupne grupe</h6>
+                    <ul id="available-list">
+                        <li ondblclick="change(this)">book-editing</li>
+                        <li ondblclick="change(this)">class-editing</li>
+                        <li ondblclick="change(this)">issue-editing</li>
+                    </ul>
+                </div>
+                <div id="chosen">
+                    <h6 class="h6" style="margin: 10px;">Odabrane grupe</h6>
+                    <ul id="chosen-list">
+                        <li ondblclick="change(this)">reservation-editing</li>
+                        <li ondblclick="change(this)">student-editing</li>
+                    </ul>
+                </div>
+            </div>
+            <caption style="margin-top: 20px;">Kako bi prebacili dostupnu grupu u odabrane grupe duplim klikom kliknite na odabranu grupu, isto vrijedi i obrnuto</caption>
+        </div>
+
+        <p style="margin-top: 20px;">
+            Da bi ova prava dodali idemo u sekciju stranice gdje nam piše <strong>Groups</strong>. Na lijevoj strani imamo sve dostupne grupe,
+            a na desnoj strani imamo groupe koje korisnik posjeduje. Duplim klikom na jednu od groupa na lijevoj strani ona prelazi na desnu što znači
+            da korisnik ima pravo da pristupi stranici kojoj ta grupa pripada.
+            Nakon što smo dodali grupe koje želimo da korisnik ima idemo na dno stranice i u desnom uglu na kliknemo na dugme <strong>SAVE</strong>, te
+            smo time završili dodavanje korisnika.
+        </p>
+        <h1 class="h1">Funkcionalnosti aplikacije</h1>
+        <p>
+            U ovome dijelu ćemo prikazati sve funkcionalnosti aplikacije koje možete da koristite, te ako vam šta nije jasno
+            možete da pročitate ovdje.
+        </p>
+        <p>
+            Aplikacija ima mogućnosti da dodaje nove knjige, učenike, razrede, izdaje knjige i vrši rezervaciju knjiga. Svaku od
+            ovih mogućnosti ćemo detaljno preći u ovoj sekciji dokumenta.
+        </p>
+        <h2 class="h2" id="home">Početna stranica (Početna)</h2>
+        <p>
+            Kada se prijavite na stranicu čiji smo proces objasnili prethodno u <a href="#welcome">Uvodu</a> doćiće te na početnu stranicu
+            kojoj možete pristupiti iako nemate korisnički račun, tu možete da pretražite sve knjige koje su trenutno u biblioteci. 
+            Dok vi budete upsivali naziv djela aplikacija će automatski da vam prikazuje knjige koje su trenutno u bazi podataka u realnom
+            vremenu. Ukoliko u bazi trenutno nemate niti jednu knjigu u tabeli će vam se prikazati
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Naziv djela</th>
+                            <th>Autor djela</th>
+                            <th>Godina izdanja</th>
+                            <th>Količina</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="5" class="table-danger" style="text-align: center;">Nemate podataka za prikaz</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </p>
+        <h2 class="h2" id="book">Uređivanje knjiga (Knjige)</h2>
+        <p>
+            Ova stranica je vrlo slična početnoj stranici uz jednu razliku, a to je da na ovoj stranici korisnik može
+            da dodaje knjige u bazu podataka kroz slijedeću formu:
+        </p>
+        <div class="embedded">
+            <div id="div_id_name" class="form-group"> <label for="id_name" class=" requiredField">
+                Naziv djela<span class="asteriskField">*</span> </label> <div class=""> <input type="text" name="name" maxlength="500" class="textinput textInput form-control" required id="id_name"> </div> </div> <div id="div_id_author" class="form-group"> <label for="id_author" class=" requiredField">
+                Autor djela<span class="asteriskField">*</span> </label> <div class=""> <input type="text" name="author" maxlength="300" class="textinput textInput form-control" required id="id_author"> </div> </div> <div id="div_id_year" class="form-group"> <label for="id_year" class=" requiredField">
+                Godina izdanja<span class="asteriskField">*</span> </label> <div class=""> <input type="number" name="year" value="2000" class="numberinput form-control" required id="id_year"> </div> </div> <div id="div_id_quantity" class="form-group"> <label for="id_quantity" class=" requiredField">
+                Količina<span class="asteriskField">*</span> </label> <div class=""> <input type="number" name="quantity" value="0" class="numberinput form-control" required id="id_quantity"> </div> </div>
+
+                <input type="submit" value="Register" class="btn btn-success btn-lg" id="register-button" onclick="addBook()">
+
+                <div class="table-responsive" style="margin-top: 30px;">
+                    <table class="table table-hover" id="book-table">
+                        <thead>
+                            <tr>
+                                <th>Naziv djela</th>
+                                <th>Autor djela</th>
+                                <th>Godina izdanja</th>
+                                <th>Količina</th>
+                                <th>Izbriši</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <tr class="trows">
+                                <td>Oliver Twist</td>
+                                <td>Charles Dickens</td>
+                                <td>1838</td>
+                                <td>150</td>
+                                <td><button type="button" onclick="deleteItem(this)" class="btn-close" aria-label="Close" data-id="51" id="delete-item"></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <caption>- Prikaz dodanih knjiga</caption>
+        </div>
+
+        <h2 class="h2" id="student">Uređivanje učenika (Učenici)</h2>
+        <p>
+            Kao kod prethodnih formi nemam mnogo razlika u prilogu možete da isprobate funkcionalnost i ove forme:
+        </p>
+        <div class="embedded">
+            <div id="div_id_first_name" class="form-group"> <label for="id_first_name" class=" requiredField">
+                Ime<span class="asteriskField">*</span> </label> <div class=""> <input type="text" name="first_name" maxlength="100" class="textinput textInput form-control" required id="id_first_name"> </div> </div> <div id="div_id_last_name" class="form-group"> <label for="id_last_name" class=" requiredField">
+                Prezime<span class="asteriskField">*</span> </label> <div class=""> <input type="text" name="last_name" maxlength="100" class="textinput textInput form-control" required id="id_last_name"> </div> </div> <div id="div_id_classes" class="form-group"> <label for="id_classes" class=" requiredField">
+                Razred<span class="asteriskField">*</span> </label> <div class=""> <select name="classes" class="select form-control" required id="id_classes"> <option value="" selected>---------</option> <option value="1">Ek1</option> <option value="2">G4</option>
+
+            </select> </div> </div>
+
+            <input type="submit" value="Register" class="btn btn-success btn-lg" id="register-button" onclick="addStudent()">
+
+            <div class="table-responsive" style="margin-top: 30px;">
+                <table class="table table-hover" id="student-table">
+                    <thead>
+                        <tr>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th>Razred</th>
+                            <th>Izbriši</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-students">
+                        <tr>
+                            <td>Dženan</td>
+                            <td>Džafić</td>
+                            <td>Ek1</td>
+                            <td><button type="button" onclick="deleteItem(this)" class="btn-close" aria-label="Close" data-id="51" id="delete-item"></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <caption>- Prikaz dodanih učenika</caption>
+        </div>
+
+        <h2 class="h2" id="reservation">Rezervacija knjiga (Rezervacija knjiga)</h2>
+        <p>
+            Ovaj dio je jako bitan jer mnogo dijelova ove forme je automatizovano. Profesor definiše od kad do kad će da rezerviše knjigu i koju
+            količinu knjiga će da rezerviše. U okviru ove forme uvedene su validacije tako da se ne može rezervisati knjiga za datum koji je prošao
+            ili da se rezerviše više knjiga nego što je trenutno dostupno u biblioteci.            
+        </p>
+
+        <p>
+            Ukoliko je profesor pogriješio neki od parametara može da izbriše rezervaciju, ali samo ukoliko niti jedan učenik nije zadužio knjigu,
+            u suprotnom nije moguće da se rezervacija otkaže osim ako svi oni koji su zadužili knjigu istu vrate.
+        </p>
+
+        <p>
+            Ukoliko učenik ne vrati knjigu sa krajem rezervacionog perioda, njemu se obračunava 0.50 KM za svaki zaostali dan dok je ne vrati.
+            Pored toga korisniku će biti signalizirano da sve knjige u okviru rezervacije nisu vraćene na način da će red u kojem je ta rezervacija 
+            biti crvene boje, onog trenutka kad se sve knjige u okviru rezervacije ona će biti zelena i korisnik će moći da je izbriše.
+        </p>
+        <div class="embedded">
+            <div class="table-responsive" id="table-content">
+                <table id="table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Početak rezervacije</th>
+                            <th>Kraj rezervacije</th>
+                            <th>Profesor</th>
+                            <th>Knjiga</th>
+                            <th>Količina</th>
+                            <th>Vraćeno knjiga</th>
+                            <th>Izdano knjiga</th>
+                            <th>Status rezervacije</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="trow  alert-danger  ">              
+                            <td>2021-11-18</td>
+                            <td>2021-11-21</td>
+                            <td></td>
+                            <td>Oliver Twist</td>
+                            <td>10</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>False</td>
+                            <td><button type="button" class="btn-close disabled" aria-label="Close"  id="delete-item" onclick="deleteItem(this)"></button></td>
+                        </tr>           
+                        <tr><td colspan="9" class="text-danger" style="text-align: center;">Rezervacija se ne može poništiti jer sve knjige koje su izdane nisu vraćene</td></tr>
+                        <tr class="trow alert-success">              
+                            <td>2021-11-18</td>
+                            <td>2021-11-21</td>
+                            <td></td>
+                            <td>Oliver Twist</td>
+                            <td>10</td>
+                            <td>10</td>
+                            <td>10</td>
+                            <td>True</td>
+                            <td><button type="button" class="btn-close" aria-label="Close"  id="delete-item" onclick="deleteItem(this)"></button></td>
+                        </tr>       
+                        <tr><td colspan="9" class="text-success" style="text-align: center;">Rezervacija se može poništiti jer su sve knjige koje su izdane i vraćene</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2 class="h2" id="issue">Izdavanje knjiga (Izdavanje knjiga)</h2>
+
+        <p>
+            Knjige se izdaju na način da radnik u biblioteci ispuni formu u kojoj je potrebno navesti <strong>rezervaciju</strong> koja je kreirana kad profesor ispuni formu
+            rezervacije, a na stranici <strong>Izdavanje knjiga</strong> rezervaciju možete odabrati u padajućem meniju pod nazivom Rezervacija.
+        </p>
+        <p style="text-align: center;">Rezervacija se sastoji od sljedećih dijelova:</p>
+        <div style="width: 100%; text-align: center;">
+            <strong>Identifikacioni broj - Naziv knjige - Ime profesora</strong>
+            <p>Primjer: <strong>12 - Oliver Twist - Dženan Džafić</strong></p>
+        </div>
+
+        <div class="embedded">
+            <div id="div_id_reservation" class="form-group"> <label for="id_reservation" class="">
+                Rezervacija
+            </label> <div class=""> <select name="reservation" class="select form-select" id="id_reservation"> <option value="" selected>---------</option> <option value="12">12 - Oliver Twist - Džafić Dženan</option></select></div> </div> 
+            <caption>Klikom na polje otvoriti će vam se padajući meni</caption>
+        </div>
+        
+
+        <p>
+            Pored polja rezervacije rednik ispunjava i polja <strong>Učenik</strong> kojeg takođe odabira iz padajućeg menija. Pored ovog radnik će i da ispuni datum 
+            izdavanja knjige kojeg može da odabere kroz formu za odabir datuma.
+        </p>
+        <div class="embedded">
+            <div id="div_id_student" class="form-group"> <label for="id_student" class=" requiredField">
+                Učenik<span class="asteriskField">*</span> </label> <div class=""> <select name="student" class="select form-select required id="id_student"> <option value="" selected>---------</option> <option value="1">Dzenan Dzafic</option> <option value="2">Alen Amidžić</option> <option value="3">Mirza Okić</option> <option value="4">Armin Keranović</option> <option value="5">Elvir Kelić</option></select> </div> </div> 
+            <caption>Klikom na polje otvoriti će vam se padajući meni</caption>
+        </div>
+
+        <div class="embedded">
+            <div id="div_id_leaseDate" class="form-group"> <label for="id_leaseDate" class=" requiredField">
+                Datum iznajmljivanja<span class="asteriskField">*</span> </label> <div class=""> <input type="date" name="leaseDate" class="dateinput form-control" required id="id_leaseDate"> </div> </div>
+            <caption>Klikom na ikonu datuma otvoriti će vam se padajući meni za odabir datuma</caption>    
+        </div>
+
+        <p>
+            Nakon što ispunite i registrujete formu pojaviti će vam se polje u kojem imate ispunjene podatke iz forme, ali i polja koja niste mogli pronaći
+            u formi jer su ta polja automatski generisana. Ta polja će se i automatski promjenuti onog trenutka kada kliknete na red.
+        </p>
+        <p>
+            Kada radnik klikne na red gdje je izdana knjiga red će promjenuti boju u zeleno, te će polja koja su automatski generisana dobiti svoje 
+            vrijednosti.
+        </p>
+
+        <div class="embedded">
+            <div class="table-responsive" id="table-content">
+                <table id="table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rezervacija</th>
+                            <th>Učenik</th>
+                            <th>Datum iznajmljivanja</th>
+                            <th>Datum vraćanja</th>
+                            <th>Vraćeno</th>
+                            <th>Dug</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="trow  alert-danger" onclick="changeStatus(this)">              
+                            <td>12 - Oliver Twist - Dženan Džafić</td>
+                            <td>Alen Amidžić</td>
+                            <td>2021-11-10</td>
+                            <td>None</td>
+                            <td>False</td>
+                            <td>0.00</td>
+                            <td><button type="button" class="btn-close" aria-label="Close" id="delete-item"></button></td>
+                        </tr>                           
+                    </tbody>
+                </table>
+            </div>
+            <caption>Klikom na red promjenuti će se status</caption>
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+    <script>
+        const table = document.getElementById("book-table");
+        const body = document.getElementById("table-body");
+        const book_body = document.getElementById("table-body-students");
+
+        const  bookName = document.getElementById("id_name");
+        const  author = document.getElementById("id_author");
+        const  year= document.getElementById("id_year");
+        const  quantity = document.getElementById("id_quantity");
+
+        const first_name_student = document.getElementById("id_first_name");
+        const last_name_student = document.getElementById("id_last_name");
+        const class_student = document.getElementById("id_classes");
+
+
+        function deleteItem(object){
+            
+            item = object
+            const row = item.parentNode.parentNode
+            row.parentNode.removeChild(row)
+
+        }
+
+        function addBook(){
+            
+            body.innerHTML += `
+                <tr>
+                    <td>${ bookName.value }</td>
+                    <td>${ author.value }</td>
+                    <td>${ year.value }</td>
+                    <td>${ quantity.value }</td>
+                    <td><button type="button" onclick="deleteItem(this)" class="btn-close" aria-label="Close" data-id="51" id="delete-item"></button></td>
+                </tr>`
+
+        }
+
+        
+        function addStudent(){
+            
+            book_body.innerHTML += `
+                <tr>
+                    <td>${ first_name_student.value }</td>
+                    <td>${ last_name_student.value }</td>
+                    <td>${ class_student.options[class_student.selectedIndex].text }</td>
+                    <td><button type="button" onclick="deleteItem(this)" class="btn-close" aria-label="Close" data-id="51" id="delete-item"></button></td>
+                </tr>`
+
+        }
+        
+        function changeStatus(object){
+            item = object
+            if (item.classList.contains("alert-danger")){
+                item.classList.remove("alert-danger");
+                item.classList.add("alert-success");
+                var today = new Date("2021-11-11");
+                var reservation = new Date("2021-11-10");
+                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    
+                item.childNodes[7].innerHTML = date
+                item.childNodes[9].innerHTML = "True"
+                let debt = (today.getDate() - reservation.getDate()) * .50
+                item.childNodes[11].innerHTML = debt
+            }
+            else{
+                item.classList.remove("alert-success");
+                item.classList.add("alert-danger");
+                item.childNodes[7].innerHTML = "None"
+                item.childNodes[9].innerHTML = "False"
+                item.childNodes[11].innerHTML = "0.00"
+            }
+            
+        }
+
+        function change(object){
+            let item = object;
+            var alist = document.getElementById("available-list");
+            var clist = document.getElementById("chosen-list");
+            var list = item.parentNode;
+
+            if(item.parentNode.id == "available-list"){
+                list.removeChild(item);
+                clist.appendChild(item);
+            }
+            else{
+                list.removeChild(item);
+                alist.appendChild(item);
+            }
+        }
+            
+
+
+
+    </script>
+
+{% endblock %}

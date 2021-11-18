@@ -29,7 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = env('DEBUG')
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [env('ALLOWED_HOSTS')]
 
@@ -56,8 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
 
 ROOT_URLCONF = 'system.urls'
 
@@ -133,7 +133,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = '/static/'
 
 # Default primary key field type
@@ -142,7 +142,16 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+if not DEBUG:
+    MIDDLEWARE += 'whitenoise.middleware.WhiteNoiseMiddleware',
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
+        django_heroku.settings(locals())
+    else:
+        django_heroku.settings(locals(), test_runner = False)
+
 
 TIME_ZONE = 'Europe/Sarajevo'
 DATE_INPUT_FORMATS = ('%d-%m-%Y')
@@ -156,8 +165,3 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema"
 }
-
-if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
-    django_heroku.settings(locals())
-else:
-    django_heroku.settings(locals(), test_runner = False)

@@ -36,9 +36,11 @@ The app is in it's first release cycle and is currently relesed as 0.0.1 Alpha a
 | Table UI fixing issues | Broken | ✔️
 | Navbar UI display all urls | not displaying all sites that can be vistied | ✔️
 | API Documentation site | No documentation at all | ✔️
-| Software Documentation site | No documentation at all | ❌
-| Frontend testing| No frontend test at all | ❌
+| Software Documentation site | No documentation at all | ✔️
 | No items behind the navbar | Navbar was overlaping the body content in mobile view | ✔️
+
+
+
 As we discover issues they will be added to this table. You can track the status of the issues in the issues panel or in this table.
 
 

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from .views import BookGPView, BookPDView, StudentGPView, StudentPDView
 from .views import ReservationGPView, ReservationPDView, IssueGPView, IssuePDView
-from .views import home_view, error_view
+from .views import home_view, error_view, tutorial_view
 
 urlpatterns = [
     # Home view
@@ -12,6 +12,10 @@ urlpatterns = [
 
     # Error view
     path("error/", error_view, name = "error-view"),
+
+    # Error view
+    path("tutorial/", tutorial_view, name = "tutorial-view"),
+
 
     # Book view's
     path("book/", login_required(BookGPView.as_view()), name = "book-view"),

@@ -41,7 +41,7 @@ class StudentForm(forms.ModelForm):
         }
 
 class IssueForm(forms.ModelForm):
-    leaseDate = forms.DateField(widget = DateInput, label = "Datum izdavanja")
+    leaseDate = forms.DateField(widget = DateInput, label = "Datum iznajmljivanja")
 
     class Meta:
         model = Issue

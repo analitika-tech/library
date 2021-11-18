@@ -9,6 +9,9 @@
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/home/' %} active {% endif %}" href="{% url 'home-view' %}">Početna</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/home/' %} active {% endif %}" href="{% url 'tutorial-view' %}">Pomoć</a>
+          </li>
           {% for group in request.user.groups.all %}
             {% if group.name ==  "book-editing" %}
               <li class="nav-item">
