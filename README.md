@@ -38,6 +38,10 @@ The app is in it's first release cycle and is currently relesed as 0.0.1 Alpha a
 | API Documentation site | No documentation at all | ✔️
 | Software Documentation site | No documentation at all | ✔️
 | No items behind the navbar | Navbar was overlaping the body content in mobile view | ✔️
+| Dates displaying in human readable format | Dates not displaying in human readable format | ✔️
+| Retrun status is displayed in local language | It is displayed as True/False | ✔️
+
+
 
 
 

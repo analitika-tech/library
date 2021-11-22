@@ -20,6 +20,22 @@
         const deleteList = document.querySelectorAll(".btn-close");
         const rows = document.getElementsByClassName("trow");
 
+        // Formating the dates and status to match local language settings
+        for(let i = 0; i < rows.length; i++){
+            if (rows[i])
+            {
+                // Converting dates
+                let startDate = new Date(rows[i].cells[3].innerText);
+                let endDate = new Date(rows[i].cells[4].innerText);
+                
+                rows[i].cells[3].innerHTML = `${ startDate.getDate() }.${ startDate.getMonth() }.${ startDate.getFullYear() } `;
+                rows[i].cells[4].innerHTML = `${ endDate.getDate() }.${ endDate.getMonth() }.${ endDate.getFullYear() } `;
+                
+                rows[i].cells[5].innerHTML = rows[i].cells[5].innerText ? "Da" : "Ne"; // Converting return status
+            }
+        }
+
+
         // Deleting the issued book
         for(let i = 0; i < deleteList.length; i++){
             deleteList[i].addEventListener("click", () => {
@@ -44,6 +60,7 @@
 
         // Updating the return status of the book
         for(let i = 0; i < rows.length; i++){
+            let startDate = new Date(rows[i].cells[3].innerText)
             rows[i].addEventListener("click", () => {
                 const url = `${ form.dataset.url }actions/${ deleteList[i].dataset.id }`;
                 $.ajax({
@@ -63,9 +80,9 @@
                             let status = element.getElementsByTagName("td")[5]
                             let debt = element.getElementsByTagName("td")[6]
 
-                            td.innerHTML = response.returnDate
-                            status.innerHTML = response.returnStatus
-                            debt.innerHTML = response.debt
+                            td.innerHTML = response.returnDate;
+                            status.innerHTML = response.returnStatus ? "Da": "Ne";
+                            debt.innerHTML = response.debt;
                         }
                         else{
                             // Change row color
@@ -78,7 +95,7 @@
                             let debt = element.getElementsByTagName("td")[6]
 
                             td.innerHTML = "None"
-                            status.innerHTML = "False"
+                            status.innerHTML = "Ne"
                             debt.innerHTML = "0.00"
                         }
                     },

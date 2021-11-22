@@ -20,9 +20,27 @@
         const form = document.getElementById("register-form");
         const csrf = document.getElementsByName("csrfmiddlewaretoken");
         const deleteList = document.querySelectorAll(".btn-close");
+        const rows = document.getElementsByClassName("trow");
         
         const errorMessage = document.getElementById("error-message");
         errorMessage.style.display = "none";
+
+
+        // Formating the dates and status to match local language settings
+        for(let i = 0; i < rows.length; i++){
+            if (rows[i])
+            {
+                // Converting dates
+                let startDate = new Date(rows[i].cells[1].innerText);
+                let endDate = new Date(rows[i].cells[2].innerText);
+                
+                rows[i].cells[1].innerHTML = `${ startDate.getDate() }.${ startDate.getMonth() }.${ startDate.getFullYear() } `;
+                rows[i].cells[2].innerHTML = `${ endDate.getDate() }.${ endDate.getMonth() }.${ endDate.getFullYear() } `;
+                
+                rows[i].cells[8].innerHTML = rows[i].cells[8].innerText ? "Sve knjige su vraćene" : "Sve knjige nisu su vraćene"; // Converting return status
+            }
+        }
+
 
         for(let i = 0; i < deleteList.length; i++){
 
