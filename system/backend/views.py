@@ -18,6 +18,7 @@ class BookAPIView(APIView):
     def post(self, request, format = None):
         serializer = BookSerializer(data = request.data, many = True)
         if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
@@ -34,6 +35,7 @@ class ClassAPIView(APIView):
     def post(self, request, format = None):
         serializer = ClassSerializer(data = request.data, many = True)
         if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
@@ -50,6 +52,7 @@ class StudentAPIView(APIView):
     def post(self, request, format = None):
         serializer = StudentSerializer(data = request.data, many = True)
         if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
