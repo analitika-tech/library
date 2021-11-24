@@ -108,10 +108,13 @@ class BookPDView(View):
         book = self.get_object(pk)
         error = JsonResponse({"error": "Sve knjige nisu vraćene!"})
 
-        if not Reservation.objects.get(book = book):
+        if len(Reservation.objects.all()) == 0: # If there is no book's at all 
             book.delete()
             return JsonResponse(dict(code = 204, content = "Knjiga je izbrisana"))
-        else:
+        elif not Reservation.objects.get(book = book): # If the selected book is not reservated
+            book.delete()
+            return JsonResponse(dict(code = 204, content = "Knjiga je izbrisana"))
+        else: # If the all books of this type are returned
             reservation = Reservation.objects.get(book = book)
             if reservation.issued == reservation.returned:
                 book.delete()

@@ -31,7 +31,13 @@
                 rows[i].cells[3].innerHTML = `${ startDate.getDate() }.${ startDate.getMonth() }.${ startDate.getFullYear() } `;
                 rows[i].cells[4].innerHTML = `${ endDate.getDate() }.${ endDate.getMonth() }.${ endDate.getFullYear() } `;
                 
-                rows[i].cells[5].innerHTML = rows[i].cells[5].innerText ? "Da" : "Ne"; // Converting return status
+                if(rows[i].cells[5].innerHTML == "True"){
+                    rows[i].cells[5].innerHTML = "Da"     
+                }
+                else{
+                    rows[i].cells[5].innerHTML = "Ne"     
+                }
+
             }
         }
 

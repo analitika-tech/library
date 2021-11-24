@@ -37,7 +37,13 @@
                 rows[i].cells[1].innerHTML = `${ startDate.getDate() }.${ startDate.getMonth() }.${ startDate.getFullYear() } `;
                 rows[i].cells[2].innerHTML = `${ endDate.getDate() }.${ endDate.getMonth() }.${ endDate.getFullYear() } `;
                 
-                rows[i].cells[8].innerHTML = rows[i].cells[8].innerText ? "Sve knjige su vraćene" : "Sve knjige nisu su vraćene"; // Converting return status
+                if (rows[i].cells[8].innerText == "True"){
+                    rows[i].cells[8].innerHTML = "Sve knjige su vraćene"; // Converting return status
+                }
+                else{
+                    rows[i].cells[8].innerHTML = "Sve knjige nisu su vraćene"
+                }
+
             }
         }
 
