@@ -65,6 +65,9 @@ After you setup the environment run:
 # To migrate all the DB models
 python manage.py migrate
 
+# Setting up all user-groups
+python manage.py create_groups
+
 # Run the server by typing
 python manage.py runserver
 ```
