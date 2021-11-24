@@ -4,8 +4,9 @@ __pycache__/
 *$py.class
 
 staticfiles/
-bookapi.txt
-studentapi.txt
+bookapi.json
+studentapi.json
+classapi.json
 # C extensions
 *.so
 

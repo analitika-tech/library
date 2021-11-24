@@ -6,7 +6,7 @@
 * [General](#general)
 * [Releases](#releases)
     * [0.0.1 - Alpha](#0.0.1-alpha)
-    * [0.0.2 - Beta](#0.0.2-beta)
+    * [0.0.1 - Beta](#0.0.1-beta)
 * [Deployment](#deployment)
 ## General
 Library Management Software (LMS) is a open-source project who provides digital support for library', so they can shift their library management model online. The project is with reason open-source because a lot of school librarys do not have resources to buy or lease this software.
@@ -28,11 +28,16 @@ You can find issues that we have discovered and fixes in the release docs table
 
 As we discover issues they will be added to this table. You can track the status of the issues in the issues panel or in this table.
 
-### 0.0.2 - Beta
+### 0.0.1 - Beta
 
 The beta release is set released for user testing.
 As we discover issues they will be added to this table. You can track the status of the issues in the issues panel or in this table.
 
+| ✔️ Expected behaviour        | ❌ Current behaviour | Status |
+| -----------                   | -----------           | ----------- |
+| Book can be deleted if it's not reseravated or all of them are returned | Can't delete at all | ✔️
+| Submit button should adjust to the site (Login or regular submit form) | Constantly the same (Register) | ✔️
+| API should save the data | The data is not saving when api request is sent | ✔️
 
 ## Deployment
 
