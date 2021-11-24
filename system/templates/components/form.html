@@ -1,5 +1,9 @@
 {% load crispy_forms_tags %}
 <form method="POST" id="register-form" data-url="{{ request.path }}">{% csrf_token %}
     {{ form | crispy }}
-    <input type="submit" value="Register" class="btn btn-success btn-lg" id="register-button">
+    {% if request.path == "/login/" %}
+        <input type="submit" value="Prijava" class="btn btn-success btn-lg" id="register-button">
+    {% elif request.path == "/book/" or request.path == "/student/" or request.path == "/issue/" or request.path == "/reservation/" %}
+        <input type="submit" value="Dodaj" class="btn btn-success btn-lg" id="register-button">
+    {% endif %}
 </form>
