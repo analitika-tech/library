@@ -38,6 +38,7 @@ As we discover issues they will be added to this table. You can track the status
 | Book can be deleted if it's not reseravated or all of them are returned | Can't delete at all | ✔️
 | Submit button should adjust to the site (Login or regular submit form) | Constantly the same (Register) | ✔️
 | API should save the data | The data is not saving when api request is sent | ✔️
+| All user-groups should setup automatically | User need's manualy to add them | ✔️
 
 ## Deployment
 
