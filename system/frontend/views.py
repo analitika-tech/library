@@ -250,22 +250,7 @@ class ReservationPDView(View):
     @method_decorator(allowerd_users(["reservation-editing"]))
     def get(self, request, pk):
         return self.get_object(pk)
-    
-    # def put(self, request, pk):
-    #     book = self.get_object(pk)
-    #     data = {}
-
-    #     if request.is_ajax():
-    #         form = BookForm(instance = book, data = request.POST)
-    #         if form.is_valid():
-    #             form.save()
-    #             data['code'] = 200
-    #             data['content'] = "Uspješno ste izmjenili podatke o njizi!"
-    #             return JsonResponse(data)
-            
-    #         data["content"] = form.errors
-    #         return JsonResponse(data)
-    
+        
     @method_decorator(allowerd_users(["reservation-editing"]))
     def delete(self, request, pk):
         reservation = self.get_object(pk)
@@ -375,6 +360,9 @@ class IssuePDView(View):
     @method_decorator(allowerd_users(["issue-editing"]))
     def delete(self, request, pk):
         issue = self.get_object(pk)
+        reservation = issue.reservation
+        reservation.issued -= 1
+        reservation.save()
         issue.delete()
 
         return JsonResponse(dict(code = 204, content = "Učenik je izbrisan!"))

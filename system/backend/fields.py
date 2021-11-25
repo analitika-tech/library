@@ -17,7 +17,7 @@ def book_fields():
             FIELDS_BOSNIAN.append("Godina izdanja")
             FIELDS_ENGLISH.append("Year")
         elif data.name == "quantity":
-            FIELDS_BOSNIAN.append("Količina")
+            FIELDS_BOSNIAN.append("Rezervisano")
             FIELDS_ENGLISH.append("Quantity")
 
     return FIELDS_BOSNIAN, FIELDS_ENGLISH
@@ -62,7 +62,7 @@ def reservation_fields():
             FIELDS_BOSNIAN.append("Knjiga")
             FIELDS_ENGLISH.append("Book")
         elif data.name == "quantity":
-            FIELDS_BOSNIAN.append("Količina")
+            FIELDS_BOSNIAN.append("Rezervisano")
             FIELDS_ENGLISH.append("Quantity")
         elif data.name == "returned":
             FIELDS_BOSNIAN.append("Vraćeno knjiga")
