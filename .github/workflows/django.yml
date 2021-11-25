@@ -31,4 +31,5 @@ jobs:
       run: |
         cd system
         python manage.py migrate
-        python manage.py test backend
+        python manage.py create_groups
+        python manage.py test

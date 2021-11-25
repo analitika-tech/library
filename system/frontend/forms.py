@@ -8,10 +8,6 @@ from backend.models import Book, Class, Student, Issue, Reservation
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-
-def date_convert(date):
-    return datetime.strptime(date, "%Y-%m-%d")
-
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
