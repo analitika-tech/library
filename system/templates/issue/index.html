@@ -85,8 +85,10 @@
                             let td = element.getElementsByTagName("td")[4]
                             let status = element.getElementsByTagName("td")[5]
                             let debt = element.getElementsByTagName("td")[6]
+                            
+                            let date = new Date(response.returnDate);
 
-                            td.innerHTML = response.returnDate;
+                            td.innerHTML = `${ date.getDate() }.${ date.getMonth() }.${ date.getFullYear() } `;
                             status.innerHTML = response.returnStatus ? "Da": "Ne";
                             debt.innerHTML = response.debt;
                         }
