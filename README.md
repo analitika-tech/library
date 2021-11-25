@@ -39,6 +39,8 @@ As we discover issues they will be added to this table. You can track the status
 | Submit button should adjust to the site (Login or regular submit form) | Constantly the same (Register) | ✔️
 | API should save the data | The data is not saving when api request is sent | ✔️
 | All user-groups should setup automatically | User need's manualy to add them | ✔️
+| On issue delete the issued book's in the reservation should be subtracted by 1 | The returned increese by 1 | ✔️
+| All dates should have the same format | The date in issues had other format | ✔️
 
 ## Deployment
 
