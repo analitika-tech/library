@@ -3,7 +3,14 @@
 
 {% block head %}
 
-    <title>Izdavanje knjiga</title>
+    <title>Iznajmljivanje knjiga</title>
+    <meta name="description" content="Iznajmite knjigu učeniku uz pomoć forme">
+    <meta property="og:title" content="Iznajmljivanje knjiga">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+    <meta property="og:description" content="Evidencija izdanih knjiga">
+    <meta property="og:type" content="article"/>
+    <meta property="og:description" content="{% static 'images/Issue.jpg' %}">
+
 
 {% endblock %}
 
