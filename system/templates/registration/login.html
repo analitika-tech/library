@@ -4,6 +4,13 @@
 {% block head %}
 
     <title>Login</title>
+    <meta name="description" content="Prijava korisnika u sistem">
+    <meta property="og:title" content="Prijavljivanje">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+    <meta property="og:description" content="Prijavljivanje">
+    <meta property="og:type" content="article"/>
+    <meta property="og:description" content="{% static 'images/Login.jpg' %}">
+
 
 {% endblock %}
 
