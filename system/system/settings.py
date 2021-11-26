@@ -29,7 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = [env('ALLOWED_HOSTS')]
 
@@ -144,16 +144,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
-# if not DEBUG:
-#     MIDDLEWARE += 'whitenoise.middleware.WhiteNoiseMiddleware',
-#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
-#     if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
-#         django_heroku.settings(locals())
-#     else:
-#         django_heroku.settings(locals(), test_runner = False)
-
-
 TIME_ZONE = 'Europe/Sarajevo'
 DATE_INPUT_FORMATS = ('%d-%m-%Y')
 
@@ -168,6 +158,8 @@ REST_FRAMEWORK = {
 }
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
     django_heroku.settings(locals())
