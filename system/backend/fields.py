@@ -17,7 +17,7 @@ def book_fields():
             FIELDS_BOSNIAN.append("Godina izdanja")
             FIELDS_ENGLISH.append("Year")
         elif data.name == "quantity":
-            FIELDS_BOSNIAN.append("Rezervisano")
+            FIELDS_BOSNIAN.append("Dostupno")
             FIELDS_ENGLISH.append("Quantity")
 
     return FIELDS_BOSNIAN, FIELDS_ENGLISH
