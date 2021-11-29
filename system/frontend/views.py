@@ -6,6 +6,7 @@ from django.contrib import messages
 
 # Decorators
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect
 from .decorators import allowerd_users
 from .decorators import unauthenticated_user
 
@@ -19,10 +20,9 @@ from .custom import get_fields
 
 
 @unauthenticated_user
+@csrf_protect
 def login_view(request):
     form = LoginForm()
-
-    # context = { "form": form, "messages": messages}
 
     if request.method == 'POST':
         form = LoginForm(request, data = request.POST)
