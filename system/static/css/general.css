@@ -67,6 +67,7 @@ body{
         flex-direction: column;
         width: 80%;
         margin: auto;
+        margin-top: 50px;
     }
     
     #register-button{
