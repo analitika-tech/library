@@ -1,9 +1,16 @@
 from django import forms
-
+from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
 from datetime import date
 
 from backend.models import Book, Class, Student, Issue, Reservation
+
+class LoginForm(AuthenticationForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].label = 'Korisničko ime'
+        self.fields['password'].label = 'Lozinka'
 
 class DateInput(forms.DateInput):
     input_type = 'date'

@@ -158,8 +158,8 @@ REST_FRAMEWORK = {
 }
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 if "I_AM_HEROKU" in os.environ and os.environ["I_AM_HEROKU"]:
     django_heroku.settings(locals())

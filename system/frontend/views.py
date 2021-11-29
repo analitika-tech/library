@@ -1,20 +1,46 @@
 from django.shortcuts import render, redirect
-from django.http import Http404, JsonResponse, HttpResponseNotAllowed
+from django.http import Http404, JsonResponse
 from django.views import View
-from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 # Decorators
 from django.utils.decorators import method_decorator
 from .decorators import allowerd_users
+from .decorators import unauthenticated_user
 
 from datetime import date
-import json
 
 # Models and Forms
 from backend.models import Book, Student, Issue, Reservation
 from backend.fields import book_fields, student_fields, reservation_fields, issue_fields
-from .forms import BookForm, StudentForm, IssueForm, ReservationForm
+from .forms import BookForm, StudentForm, IssueForm, ReservationForm, LoginForm
 from .custom import get_fields
+
+
+@unauthenticated_user
+def login_view(request):
+    form = LoginForm()
+
+    # context = { "form": form, "messages": messages}
+
+    if request.method == 'POST':
+        form = LoginForm(request, data = request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username = username, password = password)
+            if user is not None:
+                login(request, user)
+                return redirect('home-view')
+
+    context = { "form": form, "messages": messages}
+
+    return render(request, 'registration/login.html', context)
+
+def logout_view(request):
+    logout(request)
+    return redirect('login-view')
 
 
 def home_view(request):

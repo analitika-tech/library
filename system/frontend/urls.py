@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from .views import BookGPView, BookPDView, StudentGPView, StudentPDView
 from .views import ReservationGPView, ReservationPDView, IssueGPView, IssuePDView
-from .views import home_view, error_view, tutorial_view
+from .views import home_view, error_view, tutorial_view, login_view, logout_view
 
 urlpatterns = [
     # Home view
@@ -34,7 +34,7 @@ urlpatterns = [
     path("issue/actions/<int:pk>", login_required(IssuePDView.as_view()), name = "issue-actions-view"),
 
     # Authentication view's
-    path("login/", views.LoginView.as_view(), name = "login-view"),
-    path("logout/", login_required(views.LogoutView.as_view()), name = "logout-view")
+    path("login/",login_view ,name = "login-view"),
+    path("logout/", logout_view ,name = "logout-view")
 
 ]
