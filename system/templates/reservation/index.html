@@ -26,6 +26,11 @@
         errorMessage.style.display = "none";
 
 
+        var today = new Date().toISOString().split('T')[0];
+        const dPickerStart = document.getElementById("id_startDate").setAttribute("min", today);
+        const dPickerEnd = document.getElementById("id_endDate").setAttribute("min", today);
+
+
         // Formating the dates and status to match local language settings
         for(let i = 0; i < rows.length; i++){
             if (rows[i])

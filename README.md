@@ -44,6 +44,7 @@ As we discover issues they will be added to this table. You can track the status
 | Frontend testing | No frontend tests at all | ✔️
 | On returning the book the student can't be deleted from the list | It can be deleted | ✔️
 | Searching in the issues viwe for students | No search | ✔️
+| You can't pick past dates | Throws an 403 error and completly bricks the app | ✔️
 
 ## Deployment
 

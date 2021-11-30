@@ -115,6 +115,4 @@ class ReservationForm(forms.ModelForm):
         
         if endDate > startDate:
             return self.cleaned_data
-        elif startDate < datetime.today().date() or endDate < datetime.today().date():
-            raise forms.ValidationError("Opseg datuma nije validan!")
         raise forms.ValidationError("Opseg datuma nije validan!")

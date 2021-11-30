@@ -28,6 +28,9 @@
         const deleteList = document.querySelectorAll(".btn-close");
         const rows = document.getElementsByClassName("trow");
 
+        var today = new Date().toISOString().split('T')[0];
+        const dPickerStart = document.getElementById("id_leaseDate").setAttribute("min", today);
+
         // Formating the dates and status to match local language settings
         for(let i = 0; i < rows.length; i++){
             if (rows[i])
