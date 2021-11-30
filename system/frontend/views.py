@@ -356,6 +356,7 @@ class IssuePDView(View):
         issue = self.get_object(pk)
         reservation = issue.reservation
         reservation.issued -= 1
+        reservation.returned -=1
         reservation.save()
         issue.delete()
 
