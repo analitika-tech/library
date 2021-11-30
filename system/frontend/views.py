@@ -112,22 +112,6 @@ class BookPDView(View):
     @method_decorator(allowerd_users(["book-editing"]))
     def get(self, request, pk):
         return self.get_object(pk)
-    
-    @method_decorator(allowerd_users(["book-editing"]))
-    def put(self, request, pk):
-        book = self.get_object(pk)
-        data = {}
-
-        if request.is_ajax():
-            form = BookForm(instance = book, data = request.POST)
-            if form.is_valid():
-                form.save()
-                data['code'] = 200
-                data['content'] = "Uspješno ste izmjenili podatke o njizi!"
-                return JsonResponse(data)
-            
-            data["content"] = form.errors
-            return JsonResponse(data)
 
     @method_decorator(allowerd_users(["book-editing"]))
     def delete(self, request, pk):
@@ -196,22 +180,6 @@ class StudentPDView(View):
     @method_decorator(allowerd_users(["student-editing"]))
     def get(self, request, pk):
         return self.get_object(pk)
-    
-    @method_decorator(allowerd_users(["student-editing"]))
-    def put(self, request, pk):
-        book = self.get_object(pk)
-        data = {}
-
-        if request.is_ajax():
-            form = BookForm(instance = book, data = request.POST)
-            if form.is_valid():
-                form.save()
-                data['code'] = 200
-                data['content'] = "Uspješno ste izmjenili podatke o njizi!"
-                return JsonResponse(data)
-            
-            data["content"] = form.errors
-            return JsonResponse(data)
     
     @method_decorator(allowerd_users(["student-editing"]))
     def delete(self, request, pk):

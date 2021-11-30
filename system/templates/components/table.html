@@ -23,7 +23,7 @@
                         {% endfor %}
 
                         {% if request.path != "/" %}
-                            <td><button type="button" class="btn-close" aria-label="Close" data-id="{{ data.id }}" id="delete-item"></button></td>
+                            <td><button type="button" class="btn-close {% if request.path == '/reservation/' or request.path == '/issue/' %} {% if data.returnStatus %} disabled {% endif %} {% endif %}" aria-label="Close" data-id="{{ data.id }}" id="delete-item"></button></td>
                         {% endif %}
                     </tr>                           
 

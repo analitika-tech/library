@@ -9,7 +9,6 @@
     <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
     <meta property="og:description" content="Evidencija izdanih knjiga">
     <meta property="og:type" content="article"/>
-    <meta property="og:description" content="{% static 'images/Issue.jpg' %}">
 
 
 {% endblock %}
@@ -17,10 +16,12 @@
 {% block body %}
 
     {% include "components/form.html" %}
+    {% include "components/search.html" %}
     {% include "components/table.html" %}
 
 {% endblock %}
 {% block script %}
+    <script src="{% static 'js/search.js' %}"></script>
     <script>
         const form = document.getElementById("register-form");
         const csrf = document.getElementsByName("csrfmiddlewaretoken");
@@ -39,10 +40,10 @@
                 rows[i].cells[4].innerHTML = `${ endDate.getDate() }.${ endDate.getMonth() }.${ endDate.getFullYear() } `;
                 
                 if(rows[i].cells[5].innerHTML == "True"){
-                    rows[i].cells[5].innerHTML = "Da"     
+                    rows[i].cells[5].innerHTML = "Da";
                 }
                 else{
-                    rows[i].cells[5].innerHTML = "Ne"     
+                    rows[i].cells[5].innerHTML = "Ne";    
                 }
 
             }
@@ -81,7 +82,6 @@
                     headers: {"X-CSRFToken": csrf[0].value},
                     url: url,
                     success: response =>{
-                        console.log(response.returnStatus, response.returnDate, response.debt)
                         const element = deleteList[i].parentNode.parentNode // Table row
                         if(response.returnStatus){
                             // Change row color
@@ -89,15 +89,17 @@
                             element.classList.remove("alert-danger");
                             
                             // Updating the row data
-                            let td = element.getElementsByTagName("td")[4]
-                            let status = element.getElementsByTagName("td")[5]
-                            let debt = element.getElementsByTagName("td")[6]
-                            
+                            let td = element.getElementsByTagName("td")[4];
+                            let status = element.getElementsByTagName("td")[5];
+                            let debt = element.getElementsByTagName("td")[6];
+                            let del = element.getElementsByTagName("td")[7].childNodes[0];
+
                             let date = new Date(response.returnDate);
 
                             td.innerHTML = `${ date.getDate() }.${ date.getMonth() }.${ date.getFullYear() } `;
                             status.innerHTML = response.returnStatus ? "Da": "Ne";
                             debt.innerHTML = response.debt;
+                            del.classList.add("disabled");
                         }
                         else{
                             // Change row color
@@ -108,10 +110,12 @@
                             let td = element.getElementsByTagName("td")[4]
                             let status = element.getElementsByTagName("td")[5]
                             let debt = element.getElementsByTagName("td")[6]
+                            let del = element.getElementsByTagName("td")[7].childNodes[0];
 
                             td.innerHTML = "None"
                             status.innerHTML = "Ne"
                             debt.innerHTML = "0.00"
+                            del.classList.remove("disabled")
                         }
                     },
                     error: error =>{
@@ -124,4 +128,5 @@
             })
         }
     </script>
+    
 {% endblock %}

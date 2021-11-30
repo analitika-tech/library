@@ -110,8 +110,11 @@ class ReservationForm(forms.ModelForm):
     
     # Checking the date range
     def clean(self, *args, **kwargs):
-        startDate, endDate = self.clean_startDate(), self.clean_endDate()
+        cleaned_data = super(ReservationForm, self).clean()
+        startDate, endDate = cleaned_data["startDate"], cleaned_data["endDate"]
         
         if endDate > startDate:
             return self.cleaned_data
+        elif startDate < datetime.today().date() or endDate < datetime.today().date():
+            raise forms.ValidationError("Opseg datuma nije validan!")
         raise forms.ValidationError("Opseg datuma nije validan!")

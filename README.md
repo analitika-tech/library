@@ -42,6 +42,8 @@ As we discover issues they will be added to this table. You can track the status
 | On issue delete the issued book's in the reservation should be subtracted by 1 | The returned increese by 1 | ✔️
 | All dates should have the same format | The date in issues had other format | ✔️
 | Frontend testing | No frontend tests at all | ✔️
+| On returning the book the student can't be deleted from the list | It can be deleted | ✔️
+| Searching in the issues viwe for students | No search | ✔️
 
 ## Deployment
 
