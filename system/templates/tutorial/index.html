@@ -66,9 +66,9 @@
             unosi vaše podatke. Nakon što dobijete podatke ispunjavate formu i prijavljujete se.          
         </p>
         <div class="embedded">
-            <label for="username">Username*</label>
+            <label for="username">Korisničko ime*</label>
             <input class="form-control" id="username" type="text" value="testing.user">
-            <label for="password">Password*</label>
+            <label for="password">Lozinka*</label>
             <input class="form-control" id="password" type="password" value="testingthisuser">
             <input type="submit" class="btn btn-success" value="Prijava" id="register-button">
         </div>
@@ -259,7 +259,7 @@
                             <th>Naziv djela</th>
                             <th>Autor djela</th>
                             <th>Godina izdanja</th>
-                            <th>Količina</th>
+                            <th>Dostupno</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -280,7 +280,7 @@
                 Godina izdanja<span class="asteriskField">*</span> </label> <div class=""> <input type="number" name="year" value="2000" class="numberinput form-control" required id="id_year"> </div> </div> <div id="div_id_quantity" class="form-group"> <label for="id_quantity" class=" requiredField">
                 Količina<span class="asteriskField">*</span> </label> <div class=""> <input type="number" name="quantity" value="0" class="numberinput form-control" required id="id_quantity"> </div> </div>
 
-                <input type="submit" value="Register" class="btn btn-success btn-lg" id="register-button" onclick="addBook()">
+                <input type="submit" value="Dodaj" class="btn btn-success btn-lg" id="register-button" onclick="addBook()">
 
                 <div class="table-responsive" style="margin-top: 30px;">
                     <table class="table table-hover" id="book-table">
@@ -289,7 +289,7 @@
                                 <th>Naziv djela</th>
                                 <th>Autor djela</th>
                                 <th>Godina izdanja</th>
-                                <th>Količina</th>
+                                <th>Dostupno</th>
                                 <th>Izbriši</th>
                             </tr>
                         </thead>
@@ -319,7 +319,7 @@
 
             </select> </div> </div>
 
-            <input type="submit" value="Register" class="btn btn-success btn-lg" id="register-button" onclick="addStudent()">
+            <input type="submit" value="Dodaj" class="btn btn-success btn-lg" id="register-button" onclick="addStudent()">
 
             <div class="table-responsive" style="margin-top: 30px;">
                 <table class="table table-hover" id="student-table">
@@ -386,7 +386,7 @@
                             <td>10</td>
                             <td>0</td>
                             <td>1</td>
-                            <td>False</td>
+                            <td>Sve knjige nisu su vraćene</td>
                             <td><button type="button" class="btn-close disabled" aria-label="Close"  id="delete-item" onclick="deleteItem(this)"></button></td>
                         </tr>           
                         <tr><td colspan="9" class="text-danger" style="text-align: center;">Rezervacija se ne može poništiti jer sve knjige koje su izdane nisu vraćene</td></tr>
@@ -398,7 +398,7 @@
                             <td>10</td>
                             <td>10</td>
                             <td>10</td>
-                            <td>True</td>
+                            <td>Sve knjige su vraćene</td>
                             <td><button type="button" class="btn-close" aria-label="Close"  id="delete-item" onclick="deleteItem(this)"></button></td>
                         </tr>       
                         <tr><td colspan="9" class="text-success" style="text-align: center;">Rezervacija se može poništiti jer su sve knjige koje su izdane i vraćene</td></tr>
@@ -470,9 +470,9 @@
                         <tr class="trow  alert-danger" onclick="changeStatus(this)">              
                             <td>12 - Oliver Twist - Dženan Džafić</td>
                             <td>Alen Amidžić</td>
-                            <td>2021-11-10</td>
+                            <td>10.10.2021</td>
                             <td>None</td>
-                            <td>False</td>
+                            <td>Ne</td>
                             <td>0.00</td>
                             <td><button type="button" class="btn-close" aria-label="Close" id="delete-item"></button></td>
                         </tr>                           
@@ -546,10 +546,10 @@
                 item.classList.add("alert-success");
                 var today = new Date("2021-11-11");
                 var reservation = new Date("2021-11-10");
-                var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                var date = `${ today.getDate() }.${ today.getMonth() }.${ today.getFullYear() } `;
     
                 item.childNodes[7].innerHTML = date
-                item.childNodes[9].innerHTML = "True"
+                item.childNodes[9].innerHTML = "Da"
                 let debt = (today.getDate() - reservation.getDate()) * .50
                 item.childNodes[11].innerHTML = debt
             }
@@ -557,7 +557,7 @@
                 item.classList.remove("alert-success");
                 item.classList.add("alert-danger");
                 item.childNodes[7].innerHTML = "None"
-                item.childNodes[9].innerHTML = "False"
+                item.childNodes[9].innerHTML = "Ne"
                 item.childNodes[11].innerHTML = "0.00"
             }
             
