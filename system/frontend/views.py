@@ -12,7 +12,6 @@ from .decorators import unauthenticated_user
 
 from datetime import date
 import pandas as pd
-import json
 
 # Models and Forms
 from backend.models import Book, Student, Issue, Reservation
@@ -22,23 +21,17 @@ from .custom import get_fields
 
 
 # Excel to JSON parser
-def parser_view(request):
-    
+def parser_view(request):    
     data = None
-
     if request.method == "POST":
-        if request.FILES['file'] != "":
+        if 'file' in  request.FILES:
             dataFrame = pd.read_excel(request.FILES['file'], engine = "openpyxl")    
-            print(dataFrame)
             data = dataFrame.to_json(indent = 4, orient = "records", force_ascii = False)
-            print(data)
-    context = {
-        "json": data
-    }
+        else:
+            return redirect("parser-view")
 
-
+    context = { "json": data }
     return render(request, "apis/index.html", context)
-
 
 
 @unauthenticated_user
