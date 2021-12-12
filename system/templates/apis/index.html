@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+
+    <title>Konvertujte Excel datoteku u JSON</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+
+{% endblock %}
+
+
+{% block body %}
+
+
+    <form  method="POST" id="register-form" style="margin-top: 50px;" enctype="multipart/form-data">{% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile02" name="file" accept=".xls,.xlsx" required>
+            <label class="input-group-text" for="inputGroupFile02">Odaberi datoteku</label>
+        </div>
+        <input type="submit" value="Konvertuj" class="btn btn-outline-primary btn-lg">
+    </form>
+
+    <div class="embedded-json" >
+        {% if json != None %}
+            <pre id="converted">{{ json | linebreaksbr }}</pre>
+        {% endif %}
+    </div>
+    <button class="btn btn-outline-dark btn-sm" id="copy" onclick="copy()" style="width: 50%; margin: auto;">Kopiraj</button>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        function copy(){
+            
+            let text = document.getElementById("converted");
+            
+            let copyText = document.createElement("input");
+            copyText.setAttribute("value", text.innerText);
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+{% endblock %}

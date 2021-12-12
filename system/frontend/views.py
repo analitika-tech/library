@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -11,12 +11,27 @@ from .decorators import allowerd_users
 from .decorators import unauthenticated_user
 
 from datetime import date
+import pandas as pd
 
 # Models and Forms
 from backend.models import Book, Student, Issue, Reservation
 from backend.fields import book_fields, student_fields, reservation_fields, issue_fields
 from .forms import BookForm, StudentForm, IssueForm, ReservationForm, LoginForm
 from .custom import get_fields
+
+
+# Excel to JSON parser
+def parser_view(request):    
+    data = None
+    if request.method == "POST":
+        if 'file' in  request.FILES:
+            dataFrame = pd.read_excel(request.FILES['file'], engine = "openpyxl")    
+            data = dataFrame.to_json(indent = 4, orient = "records", force_ascii = False)
+        else:
+            return redirect("parser-view")
+
+    context = { "json": data }
+    return render(request, "apis/index.html", context)
 
 
 @unauthenticated_user
