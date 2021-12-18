@@ -24,11 +24,11 @@
               </li>
             {% elif group.name == "issue-editing" %}
               <li class="nav-item">
-                <a class="nav-link {% if request.path == '/issue/' %} active {% endif %}" href="{% url 'issue-view' %}">Iznajmljivanje knjiga</a>
+                <a class="nav-link {% if request.path == '/issue/' %} active {% endif %}" href="{% url 'issue-view' %}">Iznajmljivanje</a>
               </li>
             {% elif group.name == "reservation-editing" %}
               <li class="nav-item">
-                <a class="nav-link {% if request.path == '/reservation/' %} active {% endif %}" href="{% url 'reservation-view' %}">Rezervacija knjiga</a>
+                <a class="nav-link {% if request.path == '/reservation/' %} active {% endif %}" href="{% url 'reservation-view' %}">Rezervacije</a>
               </li>
             {% endif %}
           {% endfor %}
