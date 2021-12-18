@@ -184,6 +184,24 @@ class ClassGPView(View):
                 return form.errors
 
 
+class ClassPDView(View):
+    def get_object(self, pk):
+        try:
+            return Class.objects.get(id = pk)
+        except Class.DoesNotExist:
+            raise Http404
+
+    @method_decorator(allowerd_users(["class-editing"]))
+    def get(self, request, pk):
+        return self.get_object(pk)
+    
+    @method_decorator(allowerd_users(["class-editing"]))
+    def delete(self, request, pk):
+        classes = self.get_object(pk)
+        classes.delete()
+        return JsonResponse(dict(code = 204, content = "Odjeljenje je izbrisano!"))
+
+
 class StudentGPView(View):
     @method_decorator(allowerd_users(["student-editing"]))
     def get(self, request):

@@ -9,8 +9,43 @@
 
 
 {% block body %}
+    <div class="alert alert-danger" role="alert" id="error-message"></div>
 
     {% include "components/form.html" %}
     {% include "components/table.html" %}
 
+{% endblock %}
+
+{% block script %}
+    <script>
+        const form = document.getElementById("register-form");
+        const csrf = document.getElementsByName("csrfmiddlewaretoken");
+        const deleteList = document.querySelectorAll(".btn-close");
+
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.style.display = "none";
+
+        for(let i = 0; i < deleteList.length; i++){
+            deleteList[i].addEventListener("click", () => {
+                const url = `${ form.dataset.url }actions/${ deleteList[i].dataset.id }`;
+
+                $.ajax({
+                    type: "DELETE",
+                    headers: {"X-CSRFToken": csrf[0].value},
+                    url: url,
+                    success: response =>{
+                        item = deleteList[i].parentNode.parentNode;
+                        item.parentNode.removeChild(item);
+                    },
+                    error: error =>{
+                        errorMessage.style.display = "block";
+                        errorMessage.innerHTML = error.responseJSON.error;
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                })
+            })
+        }
+    </script>
 {% endblock %}
