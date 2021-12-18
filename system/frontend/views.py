@@ -14,7 +14,7 @@ from datetime import date
 import pandas as pd
 
 # Models and Forms
-from backend.models import Book, Student, Issue, Reservation, Class
+from backend.models import Info, Book, Student, Issue, Reservation, Class
 from backend.fields import book_fields, class_fields, student_fields, reservation_fields, issue_fields
 from .forms import BookForm, ClassForm, StudentForm, IssueForm, ReservationForm, LoginForm
 from .custom import get_fields
@@ -22,6 +22,7 @@ from .custom import get_fields
 
 # Excel to JSON parser
 def parser_view(request):    
+    info = Info.objects.all().first()
     data = None
     if request.method == "POST":
         if 'file' in  request.FILES:
@@ -30,7 +31,7 @@ def parser_view(request):
         else:
             return redirect("parser-view")
 
-    context = { "json": data }
+    context = { "json": data, "school_name": info.school_name }
     return render(request, "apis/index.html", context)
 
 
@@ -38,6 +39,7 @@ def parser_view(request):
 @csrf_exempt
 def login_view(request):
     form = LoginForm()
+    info = Info.objects.all().first()
 
     if request.method == 'POST':
         form = LoginForm(request, data = request.POST)
@@ -49,7 +51,7 @@ def login_view(request):
                 login(request, user)
                 return redirect('home-view')
 
-    context = { "form": form, "messages": messages}
+    context = { "form": form, "messages": messages, "school_name": info.school_name }
 
     return render(request, 'registration/login.html', context)
 
@@ -59,6 +61,7 @@ def logout_view(request):
 
 
 def home_view(request):
+    info = Info.objects.all().first()
     books = Book.objects.all()
     tableFields = book_fields()
     fields = []
@@ -72,6 +75,7 @@ def home_view(request):
         "fields": fields,
         "tfields": tableFields[0],
         "tlength": len(fields),
+        "school_name": info.school_name,
     }
 
     return render(request, "home.html", context)
@@ -80,11 +84,16 @@ def error_view(request):
     return render(request, "components/error.html")
 
 def tutorial_view(request):
-    return render(request, "tutorial/index.html")
+    info = Info.objects.all().first()
+    context = {
+        "school_name": info.school_name,
+    }
+    return render(request, "tutorial/index.html", context)
 
 class BookGPView(View):
     @method_decorator(allowerd_users(["book-editing"]))
     def get(self, request):
+        info = Info.objects.all().first()
         books = Book.objects.all()
         tableFields = book_fields()
         form = BookForm()
@@ -101,6 +110,7 @@ class BookGPView(View):
             "form": form,
             "tfields": tableFields[0],
             "tlength": len(fields) + 1,
+            "school_name": info.school_name,
         }
 
         return render(request, "book/index.html", context)
@@ -151,6 +161,7 @@ class BookPDView(View):
 class ClassGPView(View):
     @method_decorator(allowerd_users(["class-editing"]))
     def get(self, request):
+        info = Info.objects.all().first()
         classes = Class.objects.all()
         tableFields = class_fields()
         form = ClassForm()
@@ -167,6 +178,7 @@ class ClassGPView(View):
             "form": form,
             "tfields": tableFields[0],
             "tlength": len(fields) + 1,
+            "school_name": info.school_name,
         }
 
         return render(request, "class/index.html", context)
@@ -205,6 +217,7 @@ class ClassPDView(View):
 class StudentGPView(View):
     @method_decorator(allowerd_users(["student-editing"]))
     def get(self, request):
+        info = Info.objects.all().first()
         students = Student.objects.all()
         tableFields = student_fields()
         form = StudentForm()
@@ -222,6 +235,7 @@ class StudentGPView(View):
             "form": form,
             "tfields": tableFields[0],
             "tlength": len(fields) + 1,
+            "school_name": info.school_name,
         }
 
         return render(request, "student/index.html", context)
@@ -259,6 +273,7 @@ class StudentPDView(View):
 class ReservationGPView(View):
     @method_decorator(allowerd_users(["reservation-editing"]))
     def get(self, request):
+        info = Info.objects.all().first()
         reservation = Reservation.objects.filter(professor = request.user.get_full_name())
         tableFields = reservation_fields()
         form = ReservationForm()
@@ -270,12 +285,14 @@ class ReservationGPView(View):
             "form": form,
             "tfields": tableFields[0],
             "tlength": len(fields) + 1,
+            "school_name": info.school_name,
         }
 
         return render(request, "reservation/index.html", context)
     
     @method_decorator(allowerd_users(["reservation-editing"]))
     def post(self, request):
+        info = Info.objects.all().first()
         reservation = Reservation.objects.all()
         form = ReservationForm()
         fields = get_fields(Reservation, "issue")
@@ -298,6 +315,7 @@ class ReservationGPView(View):
             "fields": fields,
             "querySet": reservation,
             "form": form,
+            "school_name": info.school_name,
         }
 
         return render(request, "reservation/index.html", context)
@@ -333,6 +351,7 @@ class ReservationPDView(View):
 class IssueGPView(View):
     @method_decorator(allowerd_users(["issue-editing"]))
     def get(self, request):
+        info = Info.objects.all().first()
         issues = Issue.objects.all()
         tableFields = issue_fields()
         form = IssueForm()
@@ -344,12 +363,14 @@ class IssueGPView(View):
             "form": form,
             "tfields": tableFields[0],
             "tlength": len(fields) + 1,
+            "school_name": info.school_name,
         }
 
         return render(request, "issue/index.html", context)
 
     @method_decorator(allowerd_users(["issue-editing"]))
     def post(self, request):
+        info = Info.objects.all().first()
         issues = Issue.objects.all()
         form = IssueForm()
         fields = [field.name for field in Issue._meta.get_fields()]
@@ -368,6 +389,7 @@ class IssueGPView(View):
             "fields": fields,
             "querySet": issues,
             "form": form,
+            "school_name": info.school_name,
         }
 
         return render(request, "issue/index.html", context)

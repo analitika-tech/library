@@ -1,5 +1,7 @@
 from django.db import models
 
+class Info(models.Model):
+    school_name = models.CharField(max_length = 300)
 
 class Book(models.Model):
     name = models.CharField(max_length = 500)
