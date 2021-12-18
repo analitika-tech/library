@@ -1,4 +1,4 @@
-from .models import Book, Student, Reservation, Issue
+from .models import Book, Class, Student, Reservation, Issue
 
 
 def book_fields():
@@ -22,6 +22,20 @@ def book_fields():
 
     return FIELDS_BOSNIAN, FIELDS_ENGLISH
 
+def class_fields():
+    FIELDS_BOSNIAN, FIELDS_ENGLISH = [], []
+    for data in Class._meta.get_fields():
+        if data.name == "id":
+            FIELDS_BOSNIAN.append("ID")
+            FIELDS_ENGLISH.append("ID")
+        elif data.name == "name":
+            FIELDS_BOSNIAN.append("Odjeljenje")
+            FIELDS_ENGLISH.append("Class name")
+        elif data.name == "professor":
+            FIELDS_BOSNIAN.append("Profesor")
+            FIELDS_ENGLISH.append("Profesor")
+
+    return FIELDS_BOSNIAN, FIELDS_ENGLISH
 
 def student_fields():
     FIELDS_BOSNIAN, FIELDS_ENGLISH = [], []

@@ -20,6 +20,10 @@
               </li>
             {% elif group.name == "student-editing" %}
               <li class="nav-item">
+                <a class="nav-link {% if request.path == '/class/' %} active {% endif %}" href="{% url 'class-view' %}">Odjeljenja</a>
+              </li>
+            {% elif group.name == "student-editing" %}
+              <li class="nav-item">
                 <a class="nav-link {% if request.path == '/student/' %} active {% endif %}" href="{% url 'student-view' %}">Učenici</a>
               </li>
             {% elif group.name == "issue-editing" %}

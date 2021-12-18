@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views
 from django.contrib.auth.decorators import login_required
 
-from .views import BookGPView, BookPDView, StudentGPView, StudentPDView
+from .views import BookGPView, BookPDView, ClassGPView,  StudentGPView, StudentPDView
 from .views import ReservationGPView, ReservationPDView, IssueGPView, IssuePDView
 from .views import home_view, error_view, tutorial_view, login_view, logout_view, parser_view
 
@@ -22,6 +22,9 @@ urlpatterns = [
     # Book view's
     path("book/", login_required(BookGPView.as_view()), name = "book-view"),
     path("book/actions/<int:pk>", login_required(BookPDView.as_view()), name = "book-actions-view"),
+
+    # Class view's
+    path("class/", login_required(ClassGPView.as_view()), name = "class-view"),
 
     # Student view's
     path("student/", login_required(StudentGPView.as_view()), name = "student-view"),

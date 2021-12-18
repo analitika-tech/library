@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404, JsonResponse, HttpResponseRedirect
+from django.http import Http404, JsonResponse
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -14,9 +14,9 @@ from datetime import date
 import pandas as pd
 
 # Models and Forms
-from backend.models import Book, Student, Issue, Reservation
-from backend.fields import book_fields, student_fields, reservation_fields, issue_fields
-from .forms import BookForm, StudentForm, IssueForm, ReservationForm, LoginForm
+from backend.models import Book, Student, Issue, Reservation, Class
+from backend.fields import book_fields, class_fields, student_fields, reservation_fields, issue_fields
+from .forms import BookForm, ClassForm, StudentForm, IssueForm, ReservationForm, LoginForm
 from .custom import get_fields
 
 
@@ -147,6 +147,41 @@ class BookPDView(View):
 
         error.status_code = 403
         return error
+
+class ClassGPView(View):
+    @method_decorator(allowerd_users(["class-editing"]))
+    def get(self, request):
+        classes = Class.objects.all()
+        tableFields = class_fields()
+        form = ClassForm()
+        fields = []
+
+        # Model field list
+        for field in Class._meta.get_fields():
+            if field.name != "student":
+                fields.append(field.name) 
+
+        context = {
+            "fields": fields,
+            "querySet": classes,
+            "form": form,
+            "tfields": tableFields[0],
+            "tlength": len(fields) + 1,
+        }
+
+        return render(request, "class/index.html", context)
+
+    @method_decorator(allowerd_users(["class-editing"]))
+    def post(self, request):
+        form = ClassForm()
+
+        if request.method == "POST":
+            form = ClassForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect("class-view")
+            else:
+                return form.errors
 
 
 class StudentGPView(View):

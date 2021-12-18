@@ -4,7 +4,7 @@
     {{ form | crispy }}
     {% if request.path == "/login/" %}
         <input type="submit" value="Prijava" class="btn btn-success btn-lg" id="register-button">
-    {% elif request.path == "/book/" or request.path == "/student/" or request.path == "/issue/" or request.path == "/reservation/" %}
+    {% elif request.path == "/book/" or request.path == "/class/" or request.path == "/student/" or request.path == "/issue/" or request.path == "/reservation/" %}
         <input type="submit" value="Dodaj" class="btn btn-success btn-lg" id="register-button">
     {% endif %}
 </form>
